@@ -6,7 +6,7 @@ body, html {
 }
 
 .fondo {
-    background-image: url('fondo.png'); /* Usa la imagen que subiste */
+    background-image: url('fondo.jpg'); /* Usa la imagen que subiste */
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -34,7 +34,7 @@ h1 {
     padding: 12px 20px;
     font-size: 16px;
     border: none;
-    background-color: #ff4081;
+    background-color: #406dff;
     color: white;
     border-radius: 8px;
     cursor: pointer;
