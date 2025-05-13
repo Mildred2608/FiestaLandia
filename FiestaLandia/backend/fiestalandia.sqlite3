@@ -1,0 +1,14 @@
+create database Django;
+-- Tabla Categorias
+CREATE TABLE Categorias (
+    id_categoria INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_categoria VARCHAR(100) NOT NULL
+);
+
+-- Tabla Subcategorias
+CREATE TABLE Subcategorias (
+    id_subcategoria INT AUTO_INCREMENT PRIMARY KEY,
+    id_categoria INT NOT NULL,
+    nombre_subcategoria VARCHAR(100) NOT NULL,
+    FOREIGN KEY (id_categoria) REFERENCES Categorias(id_categoria)
+);
