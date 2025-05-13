@@ -1,3 +1,5 @@
+
+
 from django.db import models
 
 # Create your models here.
@@ -9,7 +11,7 @@ class Usuario(models.Model):
     contraseña = models.CharField(max_length=255)
     telefono = models.CharField(max_length=20, blank=True, null=True)
 
-    def __str__(self):
+    def _str_(self):
         return self.nombre
 
 
@@ -18,7 +20,7 @@ class Categoria(models.Model):
     descripcion = models.TextField(blank=True, null=True)
     imagen_url = models.CharField(max_length=255, blank=True, null=True)
 
-    def __str__(self):
+    def _str_(self):
         return self.nombre
 
 
@@ -27,7 +29,7 @@ class Proveedor(models.Model):
     contacto = models.CharField(max_length=100, blank=True, null=True)
     direccion = models.TextField(blank=True, null=True)
 
-    def __str__(self):
+    def _str_(self):
         return self.nombre
 
 
@@ -39,7 +41,7 @@ class Producto(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, related_name='productos')
     proveedor = models.ForeignKey(Proveedor, on_delete=models.SET_NULL, null=True, related_name='productos')
 
-    def __str__(self):
+    def _str_(self):
         return self.nombre
 
 
@@ -64,7 +66,7 @@ class Carrito(models.Model):
     cuotas_credito = models.IntegerField(null=True, blank=True)
     intervalo_cuotas = models.CharField(max_length=20, null=True, blank=True)
 
-    def __str__(self):
+    def _str_(self):
         return f"Carrito #{self.id} - {self.usuario.nombre}"
 
 
@@ -74,5 +76,5 @@ class CarritoDetalle(models.Model):
     cantidad = models.IntegerField()
     total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
-    def __str__(self):
+    def _str_(self):
         return f"{self.producto.nombre} x {self.cantidad}"
