@@ -45,7 +45,6 @@ INSTALLED_APPS = [
 
 
 MIDDLEWARE = [
-  
     'corsheaders.middleware.CorsMiddleware',  # debe ir al inicio
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -82,7 +81,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'fiestalandia.sqlite3',  # Nombre de la base de datos
     }
 }
 
@@ -128,6 +127,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Configuración para permitir peticiones desde el frontend
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React en modo dev
 ]
