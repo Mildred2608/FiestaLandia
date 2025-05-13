@@ -84,11 +84,11 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'fiestalandia',
+        'NAME': 'FiestaLandia',
         'USER': 'root',
-        'PASSWORD': 'Mildred1234',
+        'PASSWORD': '123456',
         'HOST': 'localhost',
-        'PORT': '3307',
+        'PORT': '3306',
     }
 }
 
