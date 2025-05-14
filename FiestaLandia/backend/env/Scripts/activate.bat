@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\Mildred\Documents\Programacion Web\ProyectoFinal\FiestaLandia\backend\env
+set "VIRTUAL_ENV=C:\Users\EliteBook 840 G10 TS\Escritorio\ProyectoWeb(FiestaLandia)\FiestaLandia\fiestalandia\backend\env"
 
 if not defined PROMPT set PROMPT=$P$G
 
@@ -24,8 +24,8 @@ set PYTHONHOME=
 if defined _OLD_VIRTUAL_PATH set PATH=%_OLD_VIRTUAL_PATH%
 if not defined _OLD_VIRTUAL_PATH set _OLD_VIRTUAL_PATH=%PATH%
 
-set PATH=%VIRTUAL_ENV%\Scripts;%PATH%
-set VIRTUAL_ENV_PROMPT=(env) 
+set "PATH=%VIRTUAL_ENV%\Scripts;%PATH%"
+set "VIRTUAL_ENV_PROMPT=(env) "
 
 :END
 if defined _OLD_CODEPAGE (

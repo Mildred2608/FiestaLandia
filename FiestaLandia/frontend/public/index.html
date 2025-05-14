@@ -1,38 +1,19 @@
+<!-- public/index.html -->
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="utf-8" />
     <title>FiestaLandia</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <!-- Encabezado con logo y menú -->
-    <header class="navbar">
-        <div class="logo-container">
-            <img src="logo.png" alt="FiestaLandia Logo" class="logo">
-        </div>
-        <nav>
-            <ul class="menu">
-                <li><a href="#">INICIO</a></li>
-                <li><a href="#">PRODUCTOS</a></li>
-                <li><a href="#">CONTACTO</a></li>
-                <li><a href="#">SOBRE NOSOTROS</a></li>
-            </ul>
-        </nav>
-    </header>
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
 
-    <!-- Sección principal con fondo -->
-    <div class="fondo">
-        <div class="contenido">
-            <h1>¡BIENVENIDOS A FIESTALANDIA!</h1>
-            <div class="botones">
-                <button>Grupos Musicales</button>
-                <button>Banquetes</button>
-                <button>Salones de Eventos</button>
-                <button>Mobiliario</button>
-                <button>Decoradores</button>
-            </div>
-        </div>
-    </div>
-</body>
+  <body>
+    <!--  🔑  ESTE div es el único que debe quedar;
+          React montará toda la app aquí. -->
+    <div id="root"></div>
+
+    <!--  NINGÚN <script src="..."></script> extra;
+          CRA inyecta su bundle automáticamente. -->
+  </body>
 </html>
