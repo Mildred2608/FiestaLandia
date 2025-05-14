@@ -14,10 +14,7 @@ const Home = () => (
         <button>Decoradores</button>
       </div>
 
-      {/* Ejemplo de link a contacto */}
-      <p style={{ marginTop: 30 }}>
-        <Link to="/contacto">Contacto</Link>
-      </p>
+      
     </div>
   </div>
 );
