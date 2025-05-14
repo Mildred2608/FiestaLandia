@@ -4,6 +4,7 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Header   from './components/Header';
 import Home     from './pages/Home';
 import Contacto from './pages/Contacto';
+import SobreNosotros from './pages/Sobrenosotros';
 import './styles/style.css';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/contacto" element={<Contacto />} />
+        <Route path="/sobre-nosotros" element={<SobreNosotros />} />
         {/* Agrega más rutas aquí */}
       </Routes>
     </Router>
