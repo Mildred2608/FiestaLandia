@@ -1,13 +1,25 @@
 CREATE DATABASE IF NOT EXISTS fiestalandia;
 USE fiestalandia;
 
+-- Tabla: Tipo_Usuario
+CREATE TABLE Tipo_Usuario (
+    id_tipo_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    descripcion TEXT
+);
+
 -- Tabla: Usuario
 CREATE TABLE Usuario (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     contraseña VARCHAR(255) NOT NULL,
-    telefono VARCHAR(20)
+    telefono VARCHAR(20),
+    direccion_envio TEXT,
+    id_tipo_usuario INT,
+    activo BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (id_tipo_usuario) REFERENCES Tipo_Usuario(id_tipo_usuario)
+        ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -- Tabla: Categoria
@@ -15,7 +27,8 @@ CREATE TABLE Categoria (
     id_categoria INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
     descripcion TEXT,
-    imagen_url VARCHAR(255)
+    imagen_url VARCHAR(255),
+    activa BOOLEAN DEFAULT TRUE
 );
 
 -- Tabla: Proveedor
@@ -23,7 +36,21 @@ CREATE TABLE Proveedor (
     id_proveedor INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     contacto VARCHAR(100),
-    direccion TEXT
+    telefono VARCHAR(20),
+    email VARCHAR(100),
+    direccion TEXT,
+    fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    activo BOOLEAN DEFAULT TRUE
+);
+
+-- Tabla: Metodo_Pago
+CREATE TABLE Metodo_Pago (
+    id_metodo_pago INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    descripcion TEXT,
+    requiere_detalles BOOLEAN DEFAULT FALSE,
+    activo BOOLEAN DEFAULT TRUE,
+    fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Tabla: Producto
@@ -33,8 +60,11 @@ CREATE TABLE Producto (
     descripcion TEXT,
     precio DECIMAL(10,2) NOT NULL,
     imagen_url VARCHAR(255),
+    stock INT NOT NULL DEFAULT 0,
     id_categoria INT,
     id_proveedor INT,
+    fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    activo BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (id_categoria) REFERENCES Categoria(id_categoria)
         ON DELETE SET NULL ON UPDATE CASCADE,
     FOREIGN KEY (id_proveedor) REFERENCES Proveedor(id_proveedor)
@@ -42,34 +72,99 @@ CREATE TABLE Producto (
 );
 
 -- Tabla: Carrito
-CREATE TABLE carrito (
-  id_carrito INT NOT NULL AUTO_INCREMENT,
-  id_usuario INT,
-  fecha_creado DATETIME DEFAULT CURRENT_TIMESTAMP,
-  metodo_pago ENUM('credito', 'debito', 'efectivo'),
-  estatus ENUM('pendiente', 'pagado', 'cancelado') DEFAULT 'pendiente',
-  fecha_pago DATETIME,
-  cuotas_credito INT,
-  intervalo_cuotas VARCHAR(20),
-  PRIMARY KEY (id_carrito),
-  FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
+CREATE TABLE Carrito (
+    id_carrito INT NOT NULL AUTO_INCREMENT,
+    id_usuario INT,
+    fecha_creado DATETIME DEFAULT CURRENT_TIMESTAMP,
+    id_metodo_pago INT,
+    estatus ENUM('activo', 'pendiente', 'pagado', 'cancelado') DEFAULT 'activo',
+    fecha_pago DATETIME,
+    cuotas_credito INT,
+    intervalo_cuotas VARCHAR(20),
+    PRIMARY KEY (id_carrito),
+    FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_metodo_pago) REFERENCES Metodo_Pago(id_metodo_pago)
+        ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-
 -- Tabla: Carrito_Detalle
-CREATE TABLE carrito_detalle (
-  id_detalle INT NOT NULL AUTO_INCREMENT,
-  id_carrito INT,
-  id_producto INT,
-  cantidad INT NOT NULL,
-  total DECIMAL(10,2) DEFAULT 0.00,
-  PRIMARY KEY (id_detalle),
-  FOREIGN KEY (id_carrito) REFERENCES carrito(id_carrito)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
+CREATE TABLE Carrito_Detalle (
+    id_detalle INT NOT NULL AUTO_INCREMENT,
+    id_carrito INT,
+    id_producto INT,
+    cantidad INT NOT NULL DEFAULT 1,
+    precio_unitario DECIMAL(10,2) NOT NULL,
+    total DECIMAL(10,2) GENERATED ALWAYS AS (cantidad * precio_unitario) STORED,
+    fecha_agregado DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id_detalle),
+    FOREIGN KEY (id_carrito) REFERENCES Carrito(id_carrito)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_producto) REFERENCES Producto(id_producto)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Tabla: Pedido
+CREATE TABLE Pedido (
+    id_pedido INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT,
+    fecha_pedido DATETIME DEFAULT CURRENT_TIMESTAMP,
+    id_metodo_pago INT,
+    estado ENUM('pendiente', 'procesando', 'enviado', 'entregado', 'cancelado') DEFAULT 'pendiente',
+    direccion_envio TEXT,
+    subtotal DECIMAL(10,2) NOT NULL,
+    impuestos DECIMAL(10,2) DEFAULT 0.00,
+    descuentos DECIMAL(10,2) DEFAULT 0.00,
+    total DECIMAL(10,2) NOT NULL,
+    notas TEXT,
+    FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
+        ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (id_metodo_pago) REFERENCES Metodo_Pago(id_metodo_pago)
+        ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- Tabla: Pedido_Detalle
+CREATE TABLE Pedido_Detalle (
+    id_detalle_pedido INT AUTO_INCREMENT PRIMARY KEY,
+    id_pedido INT,
+    id_producto INT,
+    cantidad INT NOT NULL,
+    precio_unitario DECIMAL(10,2) NOT NULL,
+    descuento_unitario DECIMAL(10,2) DEFAULT 0.00,
+    subtotal DECIMAL(10,2) GENERATED ALWAYS AS (cantidad * (precio_unitario - descuento_unitario)) STORED,
+    FOREIGN KEY (id_pedido) REFERENCES Pedido(id_pedido)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_producto) REFERENCES Producto(id_producto)
+        ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- Tabla: Resena
+CREATE TABLE Reseña (
+    id_resena INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT,
+    id_producto INT,
+    calificacion INT NOT NULL CHECK (calificacion BETWEEN 1 AND 5),
+    comentario TEXT,
+    fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+    aprobada BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_producto) REFERENCES Producto(id_producto)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Tabla: Orden (para facturación)
+CREATE TABLE Orden (
+    id_orden INT AUTO_INCREMENT PRIMARY KEY,
+    id_pedido INT,
+    numero_orden VARCHAR(50) NOT NULL UNIQUE,
+    fecha_orden DATETIME DEFAULT CURRENT_TIMESTAMP,
+    subtotal DECIMAL(10,2) NOT NULL,
+    impuestos DECIMAL(10,2) NOT NULL,
+    total DECIMAL(10,2) NOT NULL,
+    estado ENUM('pendiente', 'pagada', 'cancelada') DEFAULT 'pendiente',
+    xml_factura TEXT,
+    pdf_factura LONGBLOB,
+    FOREIGN KEY (id_pedido) REFERENCES Pedido(id_pedido)
+        ON DELETE SET NULL ON UPDATE CASCADE
 );
