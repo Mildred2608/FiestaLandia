@@ -1,7 +1,7 @@
 // src/pages/Grupos.js
 import React from 'react';
 
-import '../styles/Grupos.css';
+//import '../styles/Grupos.css';
 
 
 const gruposMusicales = [

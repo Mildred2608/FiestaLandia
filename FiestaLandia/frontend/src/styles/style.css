@@ -48,7 +48,7 @@ body, html {
 
 /* === Fondo y contenido central === */
 .fondo {
-    background-image: url('/assets/fondo.png'); /* desde public/assets */
+    background-image: url('../assets/fondo.png'); /* desde public/assets */
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -101,7 +101,7 @@ h1 {
 /* src/styles/Grupos.css */
 .grupos-container {
   padding: 20px;
-    background: url('/assets/fondo.jpg') no-repeat center center fixed;
+    background: url('../assets/fondo.png') no-repeat center center fixed;
     background-size: cover;
     min-height: 100vh;
 }

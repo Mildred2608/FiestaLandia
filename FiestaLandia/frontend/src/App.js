@@ -8,6 +8,7 @@ import SobreNosotros from './pages/Sobrenosotros';
 import Grupos from './pages/Grupos'; // <-- ¡Esta línea es necesaria!
 import './styles/style.css';
 
+
 function App() {
   return (
     <Router>
