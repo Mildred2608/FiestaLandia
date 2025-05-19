@@ -48,7 +48,7 @@ body, html {
 
 /* === Fondo y contenido central === */
 .fondo {
-    background-image: url('../assets/fondo.png'); /* Usa tu imagen de fondo */
+    background-image: url('/assets/fondo.png'); /* desde public/assets */
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -96,4 +96,49 @@ h1 {
 .botones button:hover {
     background-color: #e73370;
     transform: translateY(-3px);
+}
+
+/* src/styles/Grupos.css */
+.grupos-container {
+  padding: 20px;
+    background: url('/assets/fondo.jpg') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+}
+
+.titulo {
+  text-align: center;
+  font-size: 36px;
+  color: #fff;
+  text-shadow: 2px 2px 4px #000;
+  margin-bottom: 30px;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.grupo-card {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0px 0px 10px #000;
+}
+
+.grupo-card h2 {
+  font-size: 24px;
+  color: #2c3e50;
+}
+
+.grupo-card h3 {
+  font-size: 20px;
+  color: #16a085;
+}
+
+.grupo-card p {
+  font-size: 14px;
 }
