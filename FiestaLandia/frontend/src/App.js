@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Contacto from './pages/Contacto';
 import SobreNosotros from './pages/Sobrenosotros';
 import Grupos from './pages/Grupos'; // <-- ¡Esta línea es necesaria!
+import Banquetes from './pages/Banquetes';
 import './styles/style.css';
 
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/contacto" element={<Contacto />} />
         <Route path="/sobre-nosotros" element={<SobreNosotros />} />
         <Route path="/grupos" element={<Grupos />} />
+        <Route path="/banquetes" element={<Banquetes />} />
         {/* Agrega más rutas aquí */}
       </Routes>
     </Router>
