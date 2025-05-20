@@ -12,7 +12,7 @@ const Home = () => {
         <div className="botones">
           <button onClick={() => navigate('/grupos')}>Grupos Musicales</button>
           <button onClick={() => navigate('/banquetes')}>Banquetes</button>
-          <button>Salones de Eventos</button>
+          <button onClick={() => navigate('/salones')}>Salones de Eventos</button>
           <button>Mobiliario</button>
           <button>Decoradores</button>
         </div>
