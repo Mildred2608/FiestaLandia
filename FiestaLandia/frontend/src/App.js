@@ -9,6 +9,7 @@ import Grupos from './pages/Grupos'; // <-- ¡Esta línea es necesaria!
 import Banquetes from './pages/Banquetes';
 import Salones from './pages/Salones';
 import Mobiliario from './pages/Mobiliario';
+import Decoradores from './pages/Decoradores';
 import './styles/style.css';
 
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/banquetes" element={<Banquetes />} />
         <Route path="/salones" element={<Salones/>} />
         <Route path="/mobiliario" element={<Mobiliario/>} />
+        <Route path="/decoradores" element={<Decoradores/>} />
         {/* Agrega más rutas aquí */}
       </Routes>
     </Router>

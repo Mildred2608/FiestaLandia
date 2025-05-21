@@ -14,8 +14,7 @@ const Home = () => {
           <button onClick={() => navigate('/banquetes')}>Banquetes</button>
           <button onClick={() => navigate('/salones')}>Salones de Eventos</button>
           <button onClick={() => navigate('/mobiliario')}>Mobiliario</button>
-          <button>Mobiliario</button>
-          <button>Decoradores</button>
+          <button onClick={() => navigate('/decoradores')}>Decoradores</button>
         </div>
       </div>
     </div>
