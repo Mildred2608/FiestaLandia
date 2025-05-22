@@ -1,5 +1,6 @@
 // src/pages/Grupos.js
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import '../styles/style.css';
 
 import soniderosImg from '../assets/sonideros.jpg';
@@ -9,13 +10,10 @@ import nelsonImg from '../assets/Nelson.jpg';
 import juniorKlanImg from '../assets/juniorklan.jpg';
 import sociosImg from '../assets/socios.jpg';
 
-
-
-
 const gruposMusicales = [
   {
     nombre: 'Los Sonideros',
-    genero: 'Sonidero',
+    genero: 'sonideros',
     trayectoria: '10 años',
     musicos: 6,
     costos: 'Desde $8,000 MXN',
@@ -25,7 +23,7 @@ const gruposMusicales = [
   },
   {
     nombre: 'Mariachi Real',
-    genero: 'Ranchero, Bolero etc',
+    genero: 'mariachis',
     trayectoria: '15 años',
     musicos: 8,
     costos: 'Desde $6,500 MXN',
@@ -33,20 +31,19 @@ const gruposMusicales = [
     extra: '$900 MXN por hora',
     imagen: mariachiImg,
   },
-  // Puedes agregar más grupos aquí...
   {
     nombre: 'Super Grupo Karabali',
-    genero: 'Cumbia, Electrocumbia',
+    genero: 'cumbias',
     trayectoria: '12 años',
     musicos: 8,
     costos: 'Desde $10,500 MXN',
-    equipo: 'Bocinas (medias, graves, aereas), luces de ambiente',
+    equipo: 'Bocinas (medias, graves, aéreas), luces de ambiente',
     extra: '$1000 MXN por hora',
     imagen: karabaliImg,
   },
   {
     nombre: 'Nelson Kansela',
-    genero: 'Cumbia Tropical',
+    genero: 'cumbias',
     trayectoria: '30 años',
     musicos: 5,
     costos: 'Desde $180,000 MXN',
@@ -56,7 +53,7 @@ const gruposMusicales = [
   },
   {
     nombre: 'Junior Klan',
-    genero: 'Cumbia Tropical',
+    genero: 'cumbias',
     trayectoria: '40 años',
     musicos: 14,
     costos: 'Desde $250,000 MXN',
@@ -66,7 +63,7 @@ const gruposMusicales = [
   },
   {
     nombre: 'Socios del Ritmo',
-    genero: 'Cumbia Tropical',
+    genero: 'cumbias',
     trayectoria: '60 años',
     musicos: 11,
     costos: 'Desde $150,000 MXN',
@@ -77,22 +74,32 @@ const gruposMusicales = [
 ];
 
 const Grupos = () => {
+  const { genero } = useParams();
+
+  const gruposFiltrados = gruposMusicales.filter(
+    (grupo) => grupo.genero.toLowerCase() === genero.toLowerCase()
+  );
+
   return (
     <div className="grupos-container">
-      <h1 className="titulo">Grupos Musicales Disponibles</h1>
+      <h1 className="titulo">Grupos de {genero.charAt(0).toUpperCase() + genero.slice(1)}</h1>
       <div className="cards">
-        {gruposMusicales.map((grupo, index) => (
-          <div className="grupo-card" key={index}>
-            <img src={grupo.imagen} alt={grupo.nombre} className="grupo-imagen" />
-            <h2>{grupo.nombre}</h2>
-            <h3>Género: {grupo.genero}</h3>
-            <p><strong>Años de trayectoria:</strong> {grupo.trayectoria}</p>
-            <p><strong>Número de músicos:</strong> {grupo.musicos}</p>
-            <p><strong>Costos por paquetes:</strong> {grupo.costos}</p>
-            <p><strong>Equipo:</strong> {grupo.equipo}</p>
-            <p><strong>Costo extra por hora:</strong> {grupo.extra}</p>
-          </div>
-        ))}
+        {gruposFiltrados.length > 0 ? (
+          gruposFiltrados.map((grupo, index) => (
+            <div className="grupo-card" key={index}>
+              <img src={grupo.imagen} alt={grupo.nombre} className="grupo-imagen" />
+              <h2>{grupo.nombre}</h2>
+              <h3>Género: {grupo.genero}</h3>
+              <p><strong>Años de trayectoria:</strong> {grupo.trayectoria}</p>
+              <p><strong>Número de músicos:</strong> {grupo.musicos}</p>
+              <p><strong>Costos por paquetes:</strong> {grupo.costos}</p>
+              <p><strong>Equipo:</strong> {grupo.equipo}</p>
+              <p><strong>Costo extra por hora:</strong> {grupo.extra}</p>
+            </div>
+          ))
+        ) : (
+          <p>No hay grupos disponibles en este género.</p>
+        )}
       </div>
     </div>
   );
