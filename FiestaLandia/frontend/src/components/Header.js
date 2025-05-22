@@ -10,9 +10,9 @@ const Header = () => (
 
     <ul className="menu">
       <li><NavLink to="/" end>INICIO</NavLink></li>
+      <li><NavLink to="/sobre-nosotros">SOBRE NOSOTROS</NavLink></li>
       <li><NavLink to="/productos">PRODUCTOS</NavLink></li>
       <li><NavLink to="/contacto">CONTACTO</NavLink></li>
-      <li><NavLink to="/sobre-nosotros">SOBRE NOSOTROS</NavLink></li>
     </ul>
   </header>
 );
