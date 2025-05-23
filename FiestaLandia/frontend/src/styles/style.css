@@ -11,8 +11,8 @@ body, html {
 .navbar {
   display: flex;
   align-items: center;
-  background-color: rgb(230, 220, 180);
-  padding: 10px 20px;
+  background-color: rgba(230, 220, 180);
+  padding: 10px 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: relative; /* Necesario para el posicionamiento absoluto */
 }
@@ -89,7 +89,7 @@ body, html {
 .fondo {
     background-size: cover;
     background-position: center;
-    height: 80vh;
+    height: 100vh;
     display: flex;
     justify-content: center;
     background-color: rgb(230, 220, 180);
@@ -98,10 +98,10 @@ body, html {
 }
 
 .contenido {
-    background-color: rgba(255, 255, 255, 0.85); /* Panel semitransparente */
+    background-color: rgba(255, 255, 255); /* Panel semitransparente */
     padding: 60px;
     border-radius: 20px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    box-shadow: 0 0 25px rgba(0,0,0,0.3);
 }
 
 /* === Título === */
