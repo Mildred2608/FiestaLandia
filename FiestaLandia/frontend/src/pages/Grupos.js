@@ -1,6 +1,6 @@
 // src/pages/Grupos.js
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import '../styles/style.css';
 
 import soniderosImg from '../assets/sonideros.jpg';
@@ -75,34 +75,40 @@ const gruposMusicales = [
 
 const Grupos = () => {
   const { genero } = useParams();
+  const navigate = useNavigate();
 
   const gruposFiltrados = gruposMusicales.filter(
     (grupo) => grupo.genero.toLowerCase() === genero.toLowerCase()
   );
 
   return (
-    <div className="grupos-container">
-      <h1 className="titulo">Grupos de {genero.charAt(0).toUpperCase() + genero.slice(1)}</h1>
-      <div className="cards">
-        {gruposFiltrados.length > 0 ? (
-          gruposFiltrados.map((grupo, index) => (
-            <div className="grupo-card" key={index}>
-              <img src={grupo.imagen} alt={grupo.nombre} className="grupo-imagen" />
-              <h2>{grupo.nombre}</h2>
-              <h3>Género: {grupo.genero}</h3>
-              <p><strong>Años de trayectoria:</strong> {grupo.trayectoria}</p>
-              <p><strong>Número de músicos:</strong> {grupo.musicos}</p>
-              <p><strong>Costos por paquetes:</strong> {grupo.costos}</p>
-              <p><strong>Equipo:</strong> {grupo.equipo}</p>
-              <p><strong>Costo extra por hora:</strong> {grupo.extra}</p>
-            </div>
-          ))
-        ) : (
-          <p>No hay grupos disponibles en este género.</p>
-        )}
-      </div>
+  <div className="grupos-container">
+    {/* Botón de regreso alineado a la izquierda y más abajo */}
+    <button onClick={() => navigate(-1)} className="boton-regresar">← Regresar</button>
+
+    <h1 className="titulo">Grupos de {genero.charAt(0).toUpperCase() + genero.slice(1)}</h1>
+    
+    <div className="cards">
+      {gruposFiltrados.length > 0 ? (
+        gruposFiltrados.map((grupo, index) => (
+          <div className="grupo-card" key={index}>
+            <img src={grupo.imagen} alt={grupo.nombre} className="grupo-imagen" />
+            <h2>{grupo.nombre}</h2>
+            <h3>Género: {grupo.genero}</h3>
+            <p><strong>Años de trayectoria:</strong> {grupo.trayectoria}</p>
+            <p><strong>Número de músicos:</strong> {grupo.musicos}</p>
+            <p><strong>Costos por paquetes:</strong> {grupo.costos}</p>
+            <p><strong>Equipo:</strong> {grupo.equipo}</p>
+            <p><strong>Costo extra por hora:</strong> {grupo.extra}</p>
+          </div>
+        ))
+      ) : (
+        <p>No hay grupos disponibles en este género.</p>
+      )}
     </div>
-  );
+  </div>
+);
+
 };
 
 export default Grupos;

@@ -200,3 +200,60 @@ body, .contenedor-padre {
   background-color: #e73370;
   transform: translateY(-3px);
 }
+
+/* Boton regresar */
+.grupos-container {
+  position: relative; /* Necesario para que el botón con position absolute se ubique con base en este contenedor */
+  padding-top: 4rem; /* Espacio arriba para que no se monte el botón con el título */
+}
+
+/* Botón Regresar modificado */
+.boton-regresar {
+  position: absolute;
+  top: 8rem;     /* Baja el botón */
+  left: 6rem;    /* Lo pega a la izquierda */
+  background-color: #406dff;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+/* Estilo del título */
+.titulo {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+/* Tarjetas de los grupos */
+.cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.grupo-card {
+  background-color: white;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+  width: 300px;
+}
+
+.grupo-imagen {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.boton-regresar:hover {
+  background-color: #e73370;
+  transform: translateY(-3px);
+}
