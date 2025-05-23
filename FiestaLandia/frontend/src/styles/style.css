@@ -175,7 +175,7 @@ body, .contenedor-padre {
 
 /* === Botones de selección de género (actualizado para que coincidan visualmente) === */
 .genero-contenedor {
-  background-color: rgba(255, 255, 255, 0.85);
+  background-color: rgba(209, 183, 183, 0.85);
   padding: 10px;
   border-radius: 12px;
   box-shadow: 0 0 15px rgba(0,0,0,0.3);
