@@ -9,6 +9,7 @@ import karabaliImg from '../assets/karabali.jpg';
 import nelsonImg from '../assets/Nelson.jpg';
 import juniorKlanImg from '../assets/juniorklan.jpg';
 import sociosImg from '../assets/socios.jpg';
+import BotonRegresar from '../components/BotonRegresar'; // Ruta corregida
 
 const gruposMusicales = [
   {
@@ -82,33 +83,32 @@ const Grupos = () => {
   );
 
   return (
-  <div className="grupos-container">
-    {/* Botón de regreso alineado a la izquierda y más abajo */}
-    <button onClick={() => navigate(-1)} className="boton-regresar">← Regresar</button>
-
-    <h1 className="titulo">Grupos de {genero.charAt(0).toUpperCase() + genero.slice(1)}</h1>
-    
-    <div className="cards">
-      {gruposFiltrados.length > 0 ? (
-        gruposFiltrados.map((grupo, index) => (
-          <div className="grupo-card" key={index}>
-            <img src={grupo.imagen} alt={grupo.nombre} className="grupo-imagen" />
-            <h2>{grupo.nombre}</h2>
-            <h3>Género: {grupo.genero}</h3>
-            <p><strong>Años de trayectoria:</strong> {grupo.trayectoria}</p>
-            <p><strong>Número de músicos:</strong> {grupo.musicos}</p>
-            <p><strong>Costos por paquetes:</strong> {grupo.costos}</p>
-            <p><strong>Equipo:</strong> {grupo.equipo}</p>
-            <p><strong>Costo extra por hora:</strong> {grupo.extra}</p>
-          </div>
-        ))
-      ) : (
-        <p>No hay grupos disponibles en este género.</p>
-      )}
+    <div className="grupos-container">
+      {/* Reemplaza el botón inline por el componente reutilizable */}
+      <BotonRegresar customClass="posicion-grupos" />
+      
+      <h1 className="titulo">Grupos de {genero.charAt(0).toUpperCase() + genero.slice(1)}</h1>
+      
+      <div className="cards">
+        {gruposFiltrados.length > 0 ? (
+          gruposFiltrados.map((grupo, index) => (
+            <div className="grupo-card" key={index}>
+              <img src={grupo.imagen} alt={grupo.nombre} className="grupo-imagen" />
+              <h2>{grupo.nombre}</h2>
+              <h3>Género: {grupo.genero}</h3>
+              <p><strong>Años de trayectoria:</strong> {grupo.trayectoria}</p>
+              <p><strong>Número de músicos:</strong> {grupo.musicos}</p>
+              <p><strong>Costos por paquetes:</strong> {grupo.costos}</p>
+              <p><strong>Equipo:</strong> {grupo.equipo}</p>
+              <p><strong>Costo extra por hora:</strong> {grupo.extra}</p>
+            </div>
+          ))
+        ) : (
+          <p>No hay grupos disponibles en este género.</p>
+        )}
+      </div>
     </div>
-  </div>
-);
-
+  );
 };
 
 export default Grupos;
