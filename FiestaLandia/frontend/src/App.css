@@ -14,15 +14,17 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #314774;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* Antes era column */
   align-items: center;
-  justify-content: center;
+  justify-content: space-between; /* Espacio entre logo e imagen botón */
+  padding: 20px;
   font-size: calc(10px + 2vmin);
   color: rgb(180, 184, 165);
 }
+
 
 .App-link {
   color: #61dafb;

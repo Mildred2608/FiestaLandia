@@ -6,29 +6,67 @@ body, html {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* === Navbar === */
+/*navbar*/
+/* === Navbar modificado === */
 .navbar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: rgb(230, 220, 180);
-    padding: 20px 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.logo-container {
-    text-align: center;
-    margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  background-color: rgb(230, 220, 180);
+  padding: 10px 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative; /* Necesario para el posicionamiento absoluto */
 }
 
 .logo {
-    height: 80px;
+  height: 80px;
+  /* El logo se queda pegado a la izquierda por defecto */
+}
+
+.menu {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.menu li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  font-size: 16px;
+  transition: color 0.3s;
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+}
+
+.menu li a:hover {
+  color: #5244cf;
+}
+
+/* Versión responsive */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 15px;
+  }
+  
+  .menu {
+    position: static;
+    transform: none;
+    margin-top: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 
 /* === Menú de navegación === */
 .menu {
     list-style: none;
     display: flex;
+    align-items: center;
     gap: 30px;
     padding: 0;
     margin: 0;
@@ -36,6 +74,7 @@ body, html {
 
 .menu li a {
     text-decoration: none;
+    align-items: center;
     color: #333;
     font-weight: bold;
     font-size: 16px;
@@ -60,7 +99,7 @@ body, html {
 
 .contenido {
     background-color: rgba(255, 255, 255, 0.85); /* Panel semitransparente */
-    padding: 40px;
+    padding: 80px;
     border-radius: 12px;
     box-shadow: 0 0 15px rgba(0,0,0,0.3);
 }
@@ -112,7 +151,7 @@ h1 {
   font-size: 2.5rem;
   font-weight: bold;
   text-align: center;
-  background-color: rgba(247, 242, 242, 0.6);
+  background-color: rgb(202, 187, 202);
   text-shadow: none;
   margin: 20px auto;
   padding: 0.5rem 1rem;
@@ -211,7 +250,7 @@ body, .contenedor-padre {
 .boton-regresar {
   position: absolute;
   top: 8rem;     /* Baja el botón */
-  left: 6rem;    /* Lo pega a la izquierda */
+  left: 8rem;    /* Lo pega a la izquierda */
   background-color: #406dff;
   color: white;
   padding: 0.6rem 1.2rem;
