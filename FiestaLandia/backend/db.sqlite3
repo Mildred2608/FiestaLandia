@@ -138,20 +138,6 @@ CREATE TABLE Pedido_Detalle (
         ON DELETE SET NULL ON UPDATE CASCADE
 );
 
--- Tabla: Resena
-CREATE TABLE Reseña (
-    id_resena INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT,
-    id_producto INT,
-    calificacion INT NOT NULL CHECK (calificacion BETWEEN 1 AND 5),
-    comentario TEXT,
-    fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
-    aprobada BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
-        ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (id_producto) REFERENCES Producto(id_producto)
-        ON DELETE CASCADE ON UPDATE CASCADE
-);
 
 -- Tabla: Orden (para facturación)
 CREATE TABLE Orden (

@@ -76,7 +76,7 @@ const gruposMusicales = [
 
 const Grupos = () => {
   const { genero } = useParams();
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const gruposFiltrados = gruposMusicales.filter(
     (grupo) => grupo.genero.toLowerCase() === genero.toLowerCase()
