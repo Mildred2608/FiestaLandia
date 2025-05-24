@@ -76,7 +76,7 @@ const gruposMusicales = [
 
 const Grupos = () => {
   const { genero } = useParams();
-  //const navigate = useNavigate();
+  //const navigate = useNavigate(); marcaba un error aqui pero lo puse como comentario no afecta en nada att: juan
 
   const gruposFiltrados = gruposMusicales.filter(
     (grupo) => grupo.genero.toLowerCase() === genero.toLowerCase()
