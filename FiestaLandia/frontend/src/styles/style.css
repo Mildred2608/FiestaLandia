@@ -24,6 +24,7 @@ body, html {
 
 .menu {
   display: flex;
+  background-color: rgb(230, 220, 180);
   gap: 30px;
   list-style: none;
   margin: 0;
@@ -54,6 +55,7 @@ body, html {
   }
   
   .menu {
+    background-color: rgb(230, 220, 180);
     position: static;
     transform: none;
     margin-top: 15px;
@@ -68,6 +70,7 @@ body, html {
     display: flex;
     align-items: center;
     gap: 30px;
+    background-color: rgb(230, 220, 180);
     padding: 0;
     margin: 0;
 }
@@ -98,7 +101,7 @@ body, html {
 }
 
 .contenido {
-    background-color: rgba(255, 255, 255); /* Panel semitransparente */
+    background-color: rgba(201, 181, 181, 0.87); /* Panel semitransparente */
     padding: 60px;
     border-radius: 20px;
     box-shadow: 0 0 25px rgba(0,0,0,0.3);
@@ -140,7 +143,8 @@ h1 {
 /* === Página Grupos === */
 .grupos-container {
   padding: 20px;
-  background: url('../assets/fondo.png') no-repeat center center fixed;
+  /*background: url('../assets/fondo.png') no-repeat center center fixed;*/
+  background-color: rgb(230, 220, 180);
   background-size: cover;
   min-height: 100vh;
 }
@@ -166,7 +170,7 @@ h1 {
 }
 
 .grupo-card {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(221, 209, 209, 0.9);
   border-radius: 15px;
   padding: 20px;
   width: 300px;
@@ -244,7 +248,7 @@ body, .contenedor-padre {
 .boton-regresar {
   position: absolute;
   background-color: #406dff;
-  color: white;
+  color: rgb(223, 214, 214);
   padding: 0.8rem 1rem;
   border: none;
   border-radius: 10px;
