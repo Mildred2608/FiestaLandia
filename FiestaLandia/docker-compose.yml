@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: fiestalandia_mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: fiestalandia
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  backend:
+    build:
+      context: ./backend
+    container_name: fiestalandia_backend
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      - DB_NAME=fiestalandia
+      - DB_USER=root
+      - DB_PASSWORD=123456
+      - DB_HOST=db
+      - DB_PORT=3306
+    depends_on:
+      - db
+
+  frontend:
+    container_name: fiestalandia_frontend
+    build:
+      context: ./frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    working_dir: /app
+    command: npm start
+    ports:
+      - "3000:3000"
+
+volumes:
+  mysql_data:
