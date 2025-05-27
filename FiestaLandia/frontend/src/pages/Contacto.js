@@ -1,8 +1,10 @@
 import React from 'react';
+import BotonRegresar from '../components/BotonRegresar';
 
 const Contacto = () => (
-  <div style={{ padding: '20px' }}>
-    <h1>Página de Contacto</h1>
+  <div className="pagina-container">
+    <BotonRegresar />
+    <h1>PÁGINA DE CONTACTO</h1>
     <p>Teléfono: 2288556323</p>
     <p>Email: fiestalandia@gmail.com</p>
   </div>

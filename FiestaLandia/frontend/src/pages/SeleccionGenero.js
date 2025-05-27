@@ -1,5 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import BotonRegresar from '../components/BotonRegresar';
+import '../styles/style.css';
 
 const generos = ['sonideros', 'rancheros', 'cumbias', 'mariachis', 'baladas'];
 
@@ -11,7 +13,9 @@ const SeleccionGenero = () => {
   };
 
   return (
-    <div>
+    <div className="pagina-container inicio-container" style={{ position: 'relative', minHeight: '100vh' }}>
+      <BotonRegresar />
+
       <h1 className="titulo">Géneros Musicales</h1>
 
       <div className="genero-contenedor">
