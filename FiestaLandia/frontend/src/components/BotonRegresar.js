@@ -1,17 +1,12 @@
-// src/components/BotonRegresar.js
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/style.css';
 
-const BotonRegresar = ({ customClass = '' }) => {
+const BotonRegresar = () => {
   const navigate = useNavigate();
 
   return (
-    <button 
-      onClick={() => navigate(-1)}
-      className={`boton-regresar ${customClass}`}
-      aria-label="Volver atrás"
-    >
-      ← Regresar
+    <button className="boton-regresar" onClick={() => navigate(-1)}>
+      ⬅ Regresar
     </button>
   );
 };

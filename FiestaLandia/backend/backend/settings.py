@@ -67,6 +67,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Database
+import os
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -75,8 +77,14 @@ DATABASES = {
         'PASSWORD': '12345678',
         'HOST': 'localhost',
         'PORT': '3306',
+        'NAME': os.environ.get('DB_NAME', 'fiestalandia'),
+        'USER': os.environ.get('DB_USER', 'root'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', '1234'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '3306'),
     }
 }
+
 
 # Custom user model
 AUTH_USER_MODEL = 'app.Usuario'

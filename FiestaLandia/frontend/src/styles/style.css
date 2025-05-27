@@ -1,34 +1,35 @@
 /* === Reset básico === */
 body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/*navbar*/
-/* === Navbar modificado === */
+/* === Navbar === */
 .navbar {
   display: flex;
   align-items: center;
-  background-color: rgba(230, 220, 180);
-  padding: 10px 10px;
+  justify-content: space-between;
+  background-color: rgb(230, 220, 180);
+  padding: 10px 20px;
+  position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  position: relative; /* Necesario para el posicionamiento absoluto */
 }
 
 .logo {
   height: 80px;
-  /* El logo se queda pegado a la izquierda por defecto */
 }
 
+/* === Menú de navegación === */
 .menu {
   display: flex;
-  background-color: rgb(230, 220, 180);
+  align-items: center;
   gap: 30px;
   list-style: none;
-  margin: 0;
+  background-color: rgb(230, 220, 180);
   padding: 0;
+  margin: 0;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -40,110 +41,104 @@ body, html {
   font-weight: bold;
   font-size: 16px;
   transition: color 0.3s;
-  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+  white-space: nowrap;
 }
 
 .menu li a:hover {
   color: #5244cf;
 }
 
-/* Versión responsive */
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    padding: 15px;
-  }
-  
-  .menu {
-    background-color: rgb(230, 220, 180);
-    position: static;
-    transform: none;
-    margin-top: 15px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+/* === Carrito === */
+.carrito-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  position: relative;
+  margin-left: auto;
 }
 
-/* === Menú de navegación === */
-.menu {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    background-color: rgb(230, 220, 180);
-    padding: 0;
-    margin: 0;
+.carrito-icon {
+  width: 50px;
+  height: 50px;
+  transition: transform 0.2s ease;
 }
 
-.menu li a {
-    text-decoration: none;
-    align-items: center;
-    color: #333;
-    font-weight: bold;
-    font-size: 16px;
-    transition: color 0.3s;
+.carrito-btn:hover .carrito-icon {
+  transform: scale(1.1);
 }
 
-.menu li a:hover {
-    color: #5244cf;
+.carrito-contador {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #ff6600;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 /* === Fondo y contenido central === */
 .fondo {
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    background-color: rgb(230, 220, 180);
-    align-items: center;
-    text-align: center;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(230, 220, 180);
+  align-items: center;
+  text-align: center;
 }
 
 .contenido {
-    background-color: rgba(201, 181, 181, 0.87); /* Panel semitransparente */
-    padding: 60px;
-    border-radius: 20px;
-    box-shadow: 0 0 25px rgba(0,0,0,0.3);
+  background-color: rgba(201, 181, 181, 0.87);
+  padding: 60px;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(0,0,0,0.3);
 }
 
 /* === Título === */
 h1 {
-    font-size: 48px;
-    margin-bottom: 35px;
-    color: #333;
+  font-size: 48px;
+  margin-bottom: 35px;
+  color: #333;
 }
 
-/* === Botones === */
+/* === Botones de la página principal === */
 .botones {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
 }
 
 .botones button {
-    margin: 10px;
-    padding: 12px 24px;
-    font-size: 16px;
-    border: none;
-    background-color: #406dff;
-    color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+  margin: 10px;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  background-color: #406dff;
+  color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .botones button:hover {
-    background-color: #e73370;
-    transform: translateY(-3px);
+  background-color: #e73370;
+  transform: translateY(-3px);
 }
 
 /* === Página Grupos === */
 .grupos-container {
   padding: 20px;
-  /*background: url('../assets/fondo.png') no-repeat center center fixed;*/
   background-color: rgb(230, 220, 180);
   background-size: cover;
   min-height: 100vh;
@@ -156,7 +151,6 @@ h1 {
   font-weight: bold;
   text-align: center;
   background-color: rgb(236, 221, 236);
-  text-shadow: none;
   margin: 20px auto;
   padding: 0.20rem 1rem;
   border-radius: 0.5rem;
@@ -199,15 +193,7 @@ h1 {
   margin-bottom: 10px;
 }
 
-body, .contenedor-padre {
-  text-align: center;
-}
-
-.inicio-container {
-  text-align: center;
-  padding: 2rem;
-}
-
+/* === Botones por género === */
 .botones-generos {
   display: flex;
   flex-wrap: wrap;
@@ -216,14 +202,13 @@ body, .contenedor-padre {
   padding: 1rem;
 }
 
-/* === Botones de selección de género (actualizado para que coincidan visualmente) === */
 .genero-contenedor {
   background-color: rgba(209, 183, 183, 0.85);
   padding: 20px;
   border-radius: 20px;
   box-shadow: 0 0 15px rgba(0,0,0,0.3);
-  max-width: 900px; /* opcional, para limitar el ancho */
-  margin: 10px auto; /* para centrarlo */
+  max-width: 900px;
+  margin: 10px auto;
 }
 
 .genero-btn {
@@ -244,7 +229,7 @@ body, .contenedor-padre {
   transform: translateY(-3px);
 }
 
-/* === Botón Regresar (Versión optimizada) === */
+/* === Botón Regresar === */
 .boton-regresar {
   position: absolute;
   background-color: #406dff;
@@ -270,84 +255,15 @@ body, .contenedor-padre {
 }
 
 .pagina-container .boton-regresar {
-  top: 2rem;
+  top: 7rem;
   left: 2rem;
 }
 
 @media (max-width: 768px) {
-  .boton-regresar {
-    top: 1rem !important;
-    left: 1rem !important;
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
-  }
-}
-
-/*Carrito de compras*/
-/* Estructura principal del navbar */
-.navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-  background-color: rgb(230, 220, 180);
-  position: relative;
-}
-
-/* Estilos del carrito */
-.carrito-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 5px;
-  position: relative;
-  margin-left: auto;
-}
-
-.carrito-icon {
-  width: 50px;
-  height: 50px;
-  transition: transform 0.2s ease;
-}
-
-.carrito-btn:hover .carrito-icon {
-  transform: scale(1.1);
-}
-
-.carrito-contador {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  background-color: #ff6600;
-  color: white;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: bold;
-}
-
-/* Estilos para el menú centrado */
-.menu {
-  display: flex;
-  gap: 20px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
   .navbar {
     flex-direction: column;
   }
-  
+
   .menu {
     position: static;
     transform: none;
@@ -355,18 +271,25 @@ body, .contenedor-padre {
     flex-wrap: wrap;
     justify-content: center;
   }
-  
+
   .carrito-btn {
     margin: 10px 0 0 0;
   }
+
+  .boton-regresar {
+    top: 6rem !important;
+    left: 2rem !important;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
 }
 
+/* === Login Page === */
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 80vh;
-  background-color: #f5f5f5;
   background-color: rgb(230, 220, 180);
 }
 
@@ -422,5 +345,20 @@ body, .contenedor-padre {
 .error-message {
   color: #d32f2f;
   margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* === Utilidades === */
+body, .contenedor-padre {
+  text-align: center;
+}
+
+.inicio-container {
+  text-align: center;
+  padding: 2rem;
+}
+
+.pagina-container {
+  padding: 2rem;
   text-align: center;
 }
