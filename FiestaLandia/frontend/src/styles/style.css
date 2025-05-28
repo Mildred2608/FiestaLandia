@@ -244,6 +244,7 @@ h1 {
   transition: all 0.3s ease;
 }
 
+
 .boton-regresar:hover {
   background-color: #e73370;
   transform: translateY(-3px);
@@ -361,4 +362,61 @@ body, .contenedor-padre {
 .pagina-container {
   padding: 2rem;
   text-align: center;
+}
+
+
+/*boton añadir*/
+.boton-onClick{
+  position: absolute;
+  background-color: #406dff;
+  color: rgb(223, 214, 214);
+  padding: 0.8rem 1rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+
+.boton-onClick:hover {
+  background-color: #e73370;
+  transform: translateY(-3px);
+}
+
+.grupos-container .boton-onClick {
+  top: 10rem;
+  left: 8rem;
+}
+
+.pagina-container .boton-onClick {
+  top: 7rem;
+  left: 2rem;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+  }
+
+  .menu {
+    position: static;
+    transform: none;
+    margin: 15px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .carrito-btn {
+    margin: 10px 0 0 0;
+  }
+
+  .boton-onClick {
+    top: 6rem !important;
+    left: 2rem !important;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
 }
