@@ -229,36 +229,66 @@ h1 {
   transform: translateY(-3px);
 }
 
-/* === Botón Regresar === */
-.boton-regresar {
+
+/* Contenedor principal */
+.grupos-container {
+  position: relative;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+/* Estilos compartidos para ambos botones */
+.boton-regresar, .boton-anadir {
   position: absolute;
   background-color: #406dff;
-  color: rgb(223, 214, 214);
-  padding: 0.8rem 1rem;
+  color: white;
+  padding: 0.8rem 1.5rem;
   border: none;
   border-radius: 10px;
   font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
-  z-index: 1000;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
+  z-index: 1000;
+  text-transform: uppercase;
 }
 
-
-.boton-regresar:hover {
+.boton-regresar:hover, .boton-anadir:hover {
   background-color: #e73370;
   transform: translateY(-3px);
 }
 
-.grupos-container .boton-regresar {
-  top: 10rem;
+/* Posicionamiento específico */
+.boton-regresar {
+  top: 4rem;
   left: 8rem;
 }
 
-.pagina-container .boton-regresar {
-  top: 7rem;
-  left: 2rem;
+.boton-anadir {
+  top: 4rem;
+  right: 8rem;
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .boton-regresar, .boton-anadir {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .boton-regresar {
+    top: 6rem;
+    left: 2rem;
+  }
+  
+  .boton-anadir {
+    top: 6rem;
+    right: 2rem;
+  }
+}
+
+/*..........*/
 
 @media (max-width: 768px) {
   .navbar {
@@ -280,6 +310,14 @@ h1 {
   .boton-regresar {
     top: 6rem !important;
     left: 2rem !important;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  /* Ajustes responsive para botón AÑADIR */
+  .btn-anadir {
+    top: 80px;
+    right: 15px;
     padding: 0.6rem 1rem;
     font-size: 0.9rem;
   }
@@ -364,59 +402,77 @@ body, .contenedor-padre {
   text-align: center;
 }
 
-
-/*boton añadir*/
-.boton-onClick{
-  position: absolute;
-  background-color: #406dff;
-  color: rgb(223, 214, 214);
-  padding: 0.8rem 1rem;
-  border: none;
+/* === Estilos para el formulario de grupos === */
+/* Estilos para el formulario - VERSIÓN REDUCIDA */
+.formulario-grupo {
+  background-color: #f8f9fa;
+  padding: 30px;
   border-radius: 10px;
-  font-size: 1rem;
-  cursor: pointer;
+  width: 90%;
+  max-width: 500px;
+  position: fixed; /* o absolute según tu estructura */
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   z-index: 1000;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
+}
+
+/* Ajusta los inputs para que se adapten al contenedor reducido */
+.formulario-grupo input {
+  display: block;
+  width: 200%; /* Ocupará el 100% del contenedor reducido */
+  padding: 20px;
+  margin: 12px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+.formulario-grupo {
+  background-color: #f4f7ef;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+  box-shadow: 0 2px 2px rgba(0,0,0,0.1);
+}
+
+.formulario-grupo input {
+  display: block;
+  width: 100%;
+  padding: 6px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* === Estilos para los botones del formulario === */
+
+/* Opcional: Ajusta el botón Guardar y cancelar si es necesario */
+.btn {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  margin-top: 10px;
 }
 
 
-.boton-onClick:hover {
+.btn-cancelar {
+  background-color: #007bff;
+  color: white;
+  margin-top: 10px;
+  .btn-cancelar { margin-left: 10px; } /* ¡Espacio doble! */
+}
+
+.btn-primary:hover, .btn-cancelar:hover {
   background-color: #e73370;
   transform: translateY(-3px);
+  btn-primary { margin-right: 10px; }
 }
 
-.grupos-container .boton-onClick {
-  top: 10rem;
-  left: 8rem;
-}
-
-.pagina-container .boton-onClick {
-  top: 7rem;
-  left: 2rem;
-}
-
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-  }
-
-  .menu {
-    position: static;
-    transform: none;
-    margin: 15px 0;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .carrito-btn {
-    margin: 10px 0 0 0;
-  }
-
-  .boton-onClick {
-    top: 6rem !important;
-    left: 2rem !important;
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
-  }
-}
