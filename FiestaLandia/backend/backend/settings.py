@@ -74,7 +74,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'fiestalandia',
         'USER': 'root',
-        'PASSWORD': '12345678',
+        'PASSWORD': '1234',
         'HOST': 'localhost',
         'PORT': '3306',
         'NAME': os.environ.get('DB_NAME', 'fiestalandia'),
