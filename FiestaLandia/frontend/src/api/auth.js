@@ -39,3 +39,12 @@ export const getUserProfile = async () => {
     throw error.response?.data || { message: 'Error al obtener perfil' };
   }
 };
+
+export const register = async (email, password) => {
+  try {
+    const response = await api.post('auth/register/', { email, password });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: 'Error al registrarse' };
+  }
+};

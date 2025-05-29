@@ -2,6 +2,24 @@ from rest_framework import serializers
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Usuario, TipoUsuario
+from django.contrib.auth.password_validation import validate_password
+
+class RegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
+    
+    class Meta:
+        model = Usuario
+        fields = ['email', 'nombre', 'telefono', 'direccion_envio', 'password']
+
+    def create(self, validated_data):
+        user = Usuario.objects.create_user(
+            email=validated_data['email'],
+            nombre=validated_data.get('nombre', ''),
+            telefono=validated_data.get('telefono', ''),
+            direccion_envio=validated_data.get('direccion_envio', ''),
+            password=validated_data['password']
+        )
+        return user
 
 class TipoUsuarioSerializer(serializers.ModelSerializer):
     class Meta:
