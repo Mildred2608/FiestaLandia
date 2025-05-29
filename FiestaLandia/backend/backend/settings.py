@@ -74,14 +74,18 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'fiestalandia',
         'USER': 'root',
-        'PASSWORD': 'Mildred1234',
+<<<<<<< HEAD
+        'PASSWORD': '123456',
+=======
+        'PASSWORD': '1234',
+>>>>>>> b1c803ea0d52eeac90925eb0790c1288612d4764
         'HOST': 'localhost',
-        'PORT': '3307',
+        'PORT': '3306,
         'NAME': os.environ.get('DB_NAME', 'fiestalandia'),
         'USER': os.environ.get('DB_USER', 'root'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'Mildred1234'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', '123456'),
         'HOST': os.environ.get('DB_HOST', 'localhost'),
-        'PORT': os.environ.get('DB_PORT', '3307'),
+        'PORT': os.environ.get('DB_PORT', '3306'),
     }
 }
 
