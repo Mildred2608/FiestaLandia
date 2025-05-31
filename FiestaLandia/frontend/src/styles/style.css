@@ -476,3 +476,34 @@ body, .contenedor-padre {
   btn-primary { margin-right: 10px; }
 }
 
+/*Botones de acción*/
+.boton-accion {
+  padding: 8px 12px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.boton-accion.editar {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.boton-accion.editar:hover {
+  background-color: #e0a800;
+}
+
+.boton-accion.eliminar {
+  background-color: #dc3545;
+  color: white;
+}
+
+.boton-accion.eliminar:hover {
+  background-color: #c82333;
+}
