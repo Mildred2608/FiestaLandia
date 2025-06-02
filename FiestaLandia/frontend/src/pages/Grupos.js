@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import '../styles/style.css';
-
 import BotonRegresar from '../components/BotonRegresar';
 
 const gruposMusicales = [
