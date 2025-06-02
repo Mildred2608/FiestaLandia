@@ -507,3 +507,18 @@ body, .contenedor-padre {
 .boton-accion.eliminar:hover {
   background-color: #c82333;
 }
+
+.btn-eliminar {
+  margin-top: 10px;
+  background-color: #e74c3c;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-eliminar:hover {
+  background-color: #c0392b;
+}
