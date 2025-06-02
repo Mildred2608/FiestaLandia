@@ -10,6 +10,7 @@ import SeleccionGenero from './pages/SeleccionGenero';
 import Grupos from './pages/Grupos';
 import Banquetes from './pages/Banquetes';
 import InicioBanquetes from './pages/InicioBanquetes';
+import InicioSalones from './pages/InicioSalones';
 import Salones from './pages/Salones';
 import Mobiliario from './pages/Mobiliario';
 import Decoradores from './pages/Decoradores';
@@ -53,7 +54,10 @@ function App() {
             <Route path="/banquetes" element={<InicioBanquetes />} />
             <Route path="/banquetes/:tipo" element={<Banquetes />} />
 
-            <Route path="/salones" element={<Salones />} />
+            <Route path="/salones" element={<InicioSalones />} />
+            <Route path="/salones/:tipo" element={<Salones />} />
+
+
             <Route path="/mobiliario" element={<Mobiliario />} />
             <Route path="/decoradores" element={<Decoradores />} />
 
