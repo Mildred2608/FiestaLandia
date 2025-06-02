@@ -13,6 +13,8 @@ import InicioBanquetes from './pages/InicioBanquetes';
 import InicioSalones from './pages/InicioSalones';
 import Salones from './pages/Salones';
 import Mobiliario from './pages/Mobiliario';
+import InicioMobiliario from './pages/InicioMobiliario';
+import InicioDecoradores from './pages/InicioDecoradores';
 import Decoradores from './pages/Decoradores';
 import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
@@ -58,8 +60,14 @@ function App() {
             <Route path="/salones/:tipo" element={<Salones />} />
 
 
-            <Route path="/mobiliario" element={<Mobiliario />} />
-            <Route path="/decoradores" element={<Decoradores />} />
+          
+            <Route path="/mobiliario" element={<InicioMobiliario />} />
+            <Route path="/mobiliario/:tipo" element={<Mobiliario />} />
+
+            
+            <Route path="/decoradores" element={<InicioDecoradores />} />
+            <Route path="/decoradores/:tipo" element={<Decoradores />} />
+
 
             {/* rutas protegidas */}
             <Route path="/perfil" element={
