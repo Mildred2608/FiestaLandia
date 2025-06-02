@@ -76,7 +76,10 @@ const gruposMusicales = [
 
 const Grupos = () => {
   const { genero } = useParams();
-  const [grupos, setGrupos] = useState(gruposMusicales);
+  const [grupos, setGrupos] = useState(() => {
+  const guardados = localStorage.getItem('gruposMusicales');
+  return guardados ? JSON.parse(guardados) : gruposMusicales;
+  });
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
 
   // Campos del formulario
@@ -115,6 +118,7 @@ const Grupos = () => {
     };
 
     setGrupos([...grupos, grupoNuevo]);
+    localStorage.setItem('gruposMusicales', JSON.stringify([...grupos, grupoNuevo]));
     setMostrarFormulario(false);
     setNuevoGrupo({
       nombre: '',
