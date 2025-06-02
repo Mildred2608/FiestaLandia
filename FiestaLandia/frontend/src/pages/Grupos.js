@@ -1,6 +1,5 @@
-// src/pages/Grupos.js
 import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import '../styles/style.css';
 
 import soniderosImg from '../assets/sonideros.jpg';
@@ -9,7 +8,7 @@ import karabaliImg from '../assets/karabali.jpg';
 import nelsonImg from '../assets/Nelson.jpg';
 import juniorKlanImg from '../assets/juniorklan.jpg';
 import sociosImg from '../assets/socios.jpg';
-import BotonRegresar from '../components/BotonRegresar'; // Ruta corregida
+import BotonRegresar from '../components/BotonRegresar';
 
 const gruposMusicales = [
   {
@@ -82,7 +81,6 @@ const Grupos = () => {
   });
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
 
-  // Campos del formulario
   const [nuevoGrupo, setNuevoGrupo] = useState({
     nombre: '',
     trayectoria: '',
@@ -132,24 +130,19 @@ const Grupos = () => {
   };
 
   return (
-  <div className="grupos-container">
-    {/* Botón Regresar */}
-    <BotonRegresar customClass="boton-regresar" />
-    
-    {/* Título */}
-    <h1 className="titulo">
-      Grupos de {genero.charAt(0).toUpperCase() + genero.slice(1)}
-    </h1>
+    <div className="grupos-container">
+      <BotonRegresar customClass="boton-regresar" />
+      <h1 className="titulo">
+        Grupos de {genero.charAt(0).toUpperCase() + genero.slice(1)}
+      </h1>
 
-    {/* Botón Añadir - MODIFICADO */}
-    <button 
-      onClick={() => setMostrarFormulario(!mostrarFormulario)} 
-      className="boton-anadir"  // Cambiado a clase personalizada
-    >
-    + AÑADIR
-    </button>
+      <button 
+        onClick={() => setMostrarFormulario(!mostrarFormulario)} 
+        className="boton-anadir"
+      >
+        + AÑADIR
+      </button>
 
-      {/* Formulario (condicional) */}
       {mostrarFormulario && (
         <form onSubmit={handleSubmit} className="formulario-grupo">
           <input
@@ -190,6 +183,7 @@ const Grupos = () => {
             placeholder="Equipo"
             value={nuevoGrupo.equipo}
             onChange={handleInputChange}
+            required
           />
           <input
             type="text"
@@ -197,6 +191,7 @@ const Grupos = () => {
             placeholder="Costo extra por hora"
             value={nuevoGrupo.extra}
             onChange={handleInputChange}
+            required
           />
           <input
             type="text"
@@ -204,23 +199,21 @@ const Grupos = () => {
             placeholder="URL de la imagen"
             value={nuevoGrupo.imagen}
             onChange={handleInputChange}
+            required
           />
           <button type="submit" className="btn btn-primary">
             Guardar Grupo
           </button>
-
-         <button 
-          type="button" 
-          className="btn btn-cancelar"
-          onClick={() => setMostrarFormulario(false)} // Cierra el formulario
-        >
-          Cancelar
-        </button>
-
+          <button 
+            type="button" 
+            className="btn btn-cancelar"
+            onClick={() => setMostrarFormulario(false)}
+          >
+            Cancelar
+          </button>
         </form>
       )}
 
-      {/* Listado de grupos */}
       <div className="cards">
         {gruposFiltrados.length > 0 ? (
           gruposFiltrados.map((grupo, index) => (
@@ -229,7 +222,11 @@ const Grupos = () => {
                 <img 
                   src={grupo.imagen} 
                   alt={grupo.nombre} 
-                  className="grupo-imagen" 
+                  className="grupo-imagen"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = 'https://via.placeholder.com/300x200?text=Sin+imagen';
+                  }}
                 />
               )}
               <h2>{grupo.nombre}</h2>
