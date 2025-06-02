@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Usuario, TipoUsuario
 from django.contrib.auth.password_validation import validate_password
+from .models import GrupoMusical
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
@@ -53,3 +54,8 @@ class LoginSerializer(serializers.Serializer):
 
         data['user'] = user
         return data
+    
+class GrupoMusicalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GrupoMusical
+        fields = '__all__'
