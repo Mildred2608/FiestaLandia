@@ -3,9 +3,7 @@ import { useParams } from 'react-router-dom';
 import '../styles/style.css';
 import BotonRegresar from '../components/BotonRegresar';
 
-const gruposMusicales = [
-  
-];
+const gruposMusicales = [];
 
 const Grupos = () => {
   const { genero } = useParams();
@@ -16,6 +14,9 @@ const Grupos = () => {
   });
 
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [modoEdicion, setModoEdicion] = useState(false);
+  const [idEditando, setIdEditando] = useState(null);
+
   const [nuevoGrupo, setNuevoGrupo] = useState({
     nombre: '',
     trayectoria: '',
@@ -35,26 +36,7 @@ const Grupos = () => {
     setNuevoGrupo((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const campos = Object.values(nuevoGrupo);
-    if (campos.some((campo) => campo.trim() === '')) {
-      alert('Por favor, completa todos los campos.');
-      return;
-    }
-
-    const grupoNuevo = {
-      ...nuevoGrupo,
-      id: Date.now(), // ID único
-      genero: genero.trim().toLowerCase(),
-      musicos: parseInt(nuevoGrupo.musicos),
-    };
-
-    const nuevosGrupos = [...grupos, grupoNuevo];
-    setGrupos(nuevosGrupos);
-    localStorage.setItem('gruposMusicales', JSON.stringify(nuevosGrupos));
-    setMostrarFormulario(false);
+  const resetFormulario = () => {
     setNuevoGrupo({
       nombre: '',
       trayectoria: '',
@@ -64,12 +46,55 @@ const Grupos = () => {
       extra: '',
       imagen: '',
     });
+    setMostrarFormulario(false);
+    setModoEdicion(false);
+    setIdEditando(null);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const campos = Object.entries(nuevoGrupo);
+    if (campos.some(([key, value]) => typeof value === 'string' && value.trim() === '')) {
+    alert('Por favor, completa todos los campos.');
+    return;
+}
+
+
+    if (modoEdicion) {
+      const actualizados = grupos.map((g) =>
+        g.id === idEditando
+          ? { ...nuevoGrupo, id: idEditando, genero: genero.trim().toLowerCase(), musicos: parseInt(nuevoGrupo.musicos) }
+          : g
+      );
+      setGrupos(actualizados);
+      localStorage.setItem('gruposMusicales', JSON.stringify(actualizados));
+    } else {
+      const grupoNuevo = {
+        ...nuevoGrupo,
+        id: Date.now(),
+        genero: genero.trim().toLowerCase(),
+        musicos: parseInt(nuevoGrupo.musicos),
+      };
+      const nuevosGrupos = [...grupos, grupoNuevo];
+      setGrupos(nuevosGrupos);
+      localStorage.setItem('gruposMusicales', JSON.stringify(nuevosGrupos));
+    }
+
+    resetFormulario();
   };
 
   const eliminarGrupo = (id) => {
     const nuevosGrupos = grupos.filter((grupo) => grupo.id !== id);
     setGrupos(nuevosGrupos);
     localStorage.setItem('gruposMusicales', JSON.stringify(nuevosGrupos));
+  };
+
+  const editarGrupo = (grupo) => {
+    setNuevoGrupo({ ...grupo });
+    setModoEdicion(true);
+    setIdEditando(grupo.id);
+    setMostrarFormulario(true);
   };
 
   return (
@@ -81,10 +106,22 @@ const Grupos = () => {
       </h1>
 
       <button
-        onClick={() => setMostrarFormulario(!mostrarFormulario)}
+        onClick={() => {
+          setMostrarFormulario(!mostrarFormulario);
+          setModoEdicion(false);
+          setNuevoGrupo({
+            nombre: '',
+            trayectoria: '',
+            musicos: '',
+            costos: '',
+            equipo: '',
+            extra: '',
+            imagen: '',
+          });
+        }}
         className="boton-anadir"
       >
-        + AÑADIR
+        {mostrarFormulario ? '✖ Cerrar' : '+ AÑADIR'}
       </button>
 
       {mostrarFormulario && (
@@ -147,12 +184,12 @@ const Grupos = () => {
           />
 
           <button type="submit" className="btn btn-primary">
-            Guardar Grupo
+            {modoEdicion ? 'Guardar Cambios' : 'Guardar Grupo'}
           </button>
           <button
             type="button"
             className="btn btn-cancelar"
-            onClick={() => setMostrarFormulario(false)}
+            onClick={resetFormulario}
           >
             Cancelar
           </button>
@@ -187,7 +224,9 @@ const Grupos = () => {
               <p><strong>Equipo:</strong> {grupo.equipo}</p>
               <p><strong>Costo extra por hora:</strong> {grupo.extra}</p>
 
-              {/* Botón Eliminar */}
+              <button className="btn-editar" onClick={() => editarGrupo(grupo)}>
+                Editar
+              </button>
               <button
                 className="btn-eliminar"
                 onClick={() => eliminarGrupo(grupo.id)}
