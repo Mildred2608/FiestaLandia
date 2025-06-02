@@ -10,70 +10,189 @@ class TipoUsuario(models.Model):
         return self.nombre
 
 class UsuarioManager(BaseUserManager):
-    def create_user(self, email, password=None, **extra_fields):
-        if not email:
-            raise ValueError('El email es obligatorio')
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+    def create_user(self, correo_electronico, password=None, **extra_fields):
+        if not correo_electronico:
+            raise ValueError('El correo electrónico es obligatorio')
+        email = self.normalize_email(correo_electronico)
+        user = self.model(correo_electronico=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password=None, **extra_fields):
+    def create_superuser(self, correo_electronico, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         
-        # Obtener o crear el tipo de usuario administrador
         tipo_admin, _ = TipoUsuario.objects.get_or_create(
             nombre='admin',
             defaults={'descripcion': 'Administrador del sistema'}
         )
         extra_fields.setdefault('tipo_usuario', tipo_admin)
         
-        return self.create_user(email, password, **extra_fields)
+        return self.create_user(correo_electronico, password, **extra_fields)
 
 class Usuario(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(_('email address'), unique=True)
-    nombre = models.CharField(max_length=100)
+    correo_electronico = models.EmailField(_('email address'), unique=True)
+    Nombre_Completo = models.CharField(max_length=100)
     telefono = models.CharField(max_length=20, blank=True, null=True)
-    direccion_envio = models.TextField(blank=True, null=True)
+    Direccion_envio = models.TextField(blank=True, null=True)
     tipo_usuario = models.ForeignKey(TipoUsuario, on_delete=models.SET_NULL, null=True)
-    is_active = models.BooleanField(default=True)
+    activo = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
 
     objects = UsuarioManager()
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['nombre']
+    USERNAME_FIELD = 'correo_electronico'
+    REQUIRED_FIELDS = ['Nombre_Completo']
 
     def __str__(self):
-        return self.email
+        return self.correo_electronico
 
     class Meta:
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'
 
-class Categoria(models.Model):
-    nombre = models.CharField(max_length=50)
-    descripcion = models.TextField(blank=True, null=True)
-    imagen_url = models.CharField(max_length=255, blank=True, null=True)
-    activa = models.BooleanField(default=True)
+class Grupos(models.Model):
+    GENERO_CHOICES = [
+        ('Sonideros', 'Sonideros'),
+        ('Rancheros', 'Rancheros'),
+        ('Cumbias', 'Cumbias'),
+        ('Mariachis', 'Mariachis'),
+        ('Baladas', 'Baladas'),
+    ]
+
+    Nombre_grupo = models.CharField(max_length=100)
+    Años_trayec = models.IntegerField(null=True, blank=True)
+    Numero_music = models.IntegerField(null=True, blank=True)
+    costos_paquetes = models.DecimalField(max_digits=10, decimal_places=2)
+    Equipo = models.CharField(max_length=100, blank=True, null=True)
+    Costo_extra = models.DecimalField(max_digits=10, decimal_places=2)
+    URL = models.URLField(max_length=255, blank=True, null=True)
+    Genero = models.CharField(max_length=20, choices=GENERO_CHOICES)
 
     def __str__(self):
-        return self.nombre
+        return self.Nombre_grupo
 
-class Proveedor(models.Model):
-    nombre = models.CharField(max_length=100)
+class Banquetes(models.Model):
+    nombre_empresa = models.CharField(max_length=100)
+    tipo_comida = models.CharField(max_length=100)
+    capacidad_personas = models.IntegerField(null=True, blank=True)
+    incluye_bebidas = models.BooleanField(default=False)
+    precio_por_persona = models.DecimalField(max_digits=10, decimal_places=2)
     contacto = models.CharField(max_length=100, blank=True, null=True)
     telefono = models.CharField(max_length=20, blank=True, null=True)
-    email = models.EmailField(blank=True, null=True)
-    direccion = models.TextField(blank=True, null=True)
-    fecha_registro = models.DateTimeField(auto_now_add=True)
-    activo = models.BooleanField(default=True)
+    url = models.URLField(max_length=255, blank=True, null=True)
 
     def __str__(self):
-        return self.nombre
+        return self.nombre_empresa
+
+class SalonesEventos(models.Model):
+    nombre_salon = models.CharField(max_length=100)
+    direccion = models.CharField(max_length=200, blank=True, null=True)
+    capacidad = models.IntegerField(null=True, blank=True)
+    incluye_estacionamiento = models.BooleanField(default=False)
+    aire_acondicionado = models.BooleanField(default=False)
+    precio_renta = models.DecimalField(max_digits=10, decimal_places=2)
+    contacto = models.CharField(max_length=100, blank=True, null=True)
+    telefono = models.CharField(max_length=20, blank=True, null=True)
+    url = models.URLField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return self.nombre_salon
+
+class Mobiliario(models.Model):
+    TIPO_CHOICES = [
+        ('Sillas', 'Sillas'),
+        ('Mesas', 'Mesas'),
+        ('Carpas', 'Carpas'),
+        # Agrega más tipos según necesites
+    ]
+
+    tipo_mobiliario = models.CharField(max_length=100, choices=TIPO_CHOICES)
+    cantidad_disponible = models.IntegerField()
+    precio_unitario = models.DecimalField(max_digits=10, decimal_places=2)
+    color = models.CharField(max_length=50, blank=True, null=True)
+    material = models.CharField(max_length=50, blank=True, null=True)
+    proveedor = models.CharField(max_length=100, blank=True, null=True)
+    telefono_proveedor = models.CharField(max_length=20, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.tipo_mobiliario} - {self.color}"
+
+class Decoradores(models.Model):
+    nombre_empresa = models.CharField(max_length=100, blank=True, null=True)
+    estilo_especialidad = models.CharField(max_length=100)
+    precio_base = models.DecimalField(max_digits=10, decimal_places=2)
+    servicios_incluidos = models.TextField(blank=True, null=True)
+    contacto = models.CharField(max_length=100, blank=True, null=True)
+    telefono = models.CharField(max_length=20, blank=True, null=True)
+    url_portafolio = models.URLField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return self.nombre_empresa or self.contacto
+
+class Categoria(models.Model):
+    CATEGORIA_CHOICES = [
+        ('Grupos Musicales', 'Grupos Musicales'),
+        ('Banquetes', 'Banquetes'),
+        ('Salones de Eventos', 'Salones de Eventos'),
+        ('Mobiliario', 'Mobiliario'),
+        ('Decoradores', 'Decoradores'),
+    ]
+
+    Nombre_Cat = models.CharField(
+        max_length=100,
+        primary_key=True,
+        choices=CATEGORIA_CHOICES,
+        verbose_name="Nombre de Categoría"
+    )
+    
+    # Relaciones con otras tablas (usando los nombres de campo de tu SQL)
+    id_grupo = models.ForeignKey(
+        'Grupos',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        db_column='id_grupo'
+    )
+    id_banquete = models.ForeignKey(
+        'Banquetes',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        db_column='id_banquete'
+    )
+    id_salon = models.ForeignKey(
+        'SalonesEventos',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        db_column='id_salon'
+    )
+    id_mobiliario = models.ForeignKey(
+        'Mobiliario',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        db_column='id_mobiliario'
+    )
+    id_decorador = models.ForeignKey(
+        'Decoradores',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        db_column='id_decorador'
+    )
+
+    class Meta:
+        db_table = 'Categoria'  # Nombre exacto de la tabla en BD
+        verbose_name = "Categoría"
+        verbose_name_plural = "Categorías"
+
+    def __str__(self):
+        return self.Nombre_Cat
+
 
 class MetodoPago(models.Model):
     nombre = models.CharField(max_length=50)
@@ -86,15 +205,25 @@ class MetodoPago(models.Model):
         return self.nombre
 
 class Producto(models.Model):
+    id_producto = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(blank=True, null=True)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     imagen_url = models.CharField(max_length=255, blank=True, null=True)
     stock = models.IntegerField(default=0)
-    categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, related_name='productos')
-    proveedor = models.ForeignKey(Proveedor, on_delete=models.SET_NULL, null=True, related_name='productos')
+    Nombre_Cat = models.ForeignKey(
+        Categoria,
+        on_delete=models.SET_NULL,
+        null=True,
+        db_column='Nombre_Cat'  # Usamos el nombre exacto de la columna
+    )
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     activo = models.BooleanField(default=True)
+
+    class Meta:
+        db_table = 'Producto'  # Nombre exacto de la tabla
+        verbose_name = "Producto"
+        verbose_name_plural = "Productos"
 
     def __str__(self):
         return self.nombre
@@ -107,7 +236,7 @@ class Carrito(models.Model):
         ('cancelado', 'Cancelado'),
     ]
 
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='carritos')
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     fecha_creado = models.DateTimeField(auto_now_add=True)
     metodo_pago = models.ForeignKey(MetodoPago, on_delete=models.SET_NULL, null=True, blank=True)
     estatus = models.CharField(max_length=10, choices=ESTATUS_CHOICES, default='activo')
@@ -116,10 +245,10 @@ class Carrito(models.Model):
     intervalo_cuotas = models.CharField(max_length=20, null=True, blank=True)
 
     def __str__(self):
-        return f"Carrito #{self.id} - {self.usuario.nombre}"
+        return f"Carrito #{self.id} - {self.usuario.Nombre_Completo}"
 
 class CarritoDetalle(models.Model):
-    carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE, related_name='detalles')
+    carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.IntegerField(default=1)
     precio_unitario = models.DecimalField(max_digits=10, decimal_places=2)
@@ -142,7 +271,7 @@ class Pedido(models.Model):
         ('cancelado', 'Cancelado'),
     ]
 
-    usuario = models.ForeignKey(Usuario, on_delete=models.SET_NULL, null=True, related_name='pedidos')
+    usuario = models.ForeignKey(Usuario, on_delete=models.SET_NULL, null=True)
     fecha_pedido = models.DateTimeField(auto_now_add=True)
     metodo_pago = models.ForeignKey(MetodoPago, on_delete=models.SET_NULL, null=True)
     estado = models.CharField(max_length=10, choices=ESTADO_CHOICES, default='pendiente')
@@ -154,10 +283,10 @@ class Pedido(models.Model):
     notas = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f"Pedido #{self.id} - {self.usuario.nombre if self.usuario else 'Usuario eliminado'}"
+        return f"Pedido #{self.id} - {self.usuario.Nombre_Completo if self.usuario else 'Usuario eliminado'}"
 
 class PedidoDetalle(models.Model):
-    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, related_name='detalles')
+    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.SET_NULL, null=True)
     cantidad = models.IntegerField()
     precio_unitario = models.DecimalField(max_digits=10, decimal_places=2)
@@ -178,7 +307,7 @@ class Orden(models.Model):
         ('cancelada', 'Cancelada'),
     ]
 
-    pedido = models.ForeignKey(Pedido, on_delete=models.SET_NULL, null=True, related_name='ordenes')
+    pedido = models.ForeignKey(Pedido, on_delete=models.SET_NULL, null=True)
     numero_orden = models.CharField(max_length=50, unique=True)
     fecha_orden = models.DateTimeField(auto_now_add=True)
     subtotal = models.DecimalField(max_digits=10, decimal_places=2)
