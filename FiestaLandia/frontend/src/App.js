@@ -9,6 +9,7 @@ import SobreNosotros from './pages/Sobrenosotros';
 import SeleccionGenero from './pages/SeleccionGenero';
 import Grupos from './pages/Grupos';
 import Banquetes from './pages/Banquetes';
+import InicioBanquetes from './pages/InicioBanquetes';
 import Salones from './pages/Salones';
 import Mobiliario from './pages/Mobiliario';
 import Decoradores from './pages/Decoradores';
@@ -17,6 +18,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import UserProfile from './pages/UserProfile';
 import Carrito from './pages/Carrito';
 import './styles/style.css';
+
 
 const PrivateRoute = ({ children, adminOnly = false }) => {
   const { user } = useAuth();
@@ -48,7 +50,9 @@ function App() {
             {/* rutas abiertas al público */}
             <Route path="/grupos" element={<SeleccionGenero />} />
             <Route path="/grupos/:genero" element={<Grupos />} />
-            <Route path="/banquetes" element={<Banquetes />} />
+            <Route path="/banquetes" element={<InicioBanquetes />} />
+            <Route path="/banquetes/:tipo" element={<Banquetes />} />
+
             <Route path="/salones" element={<Salones />} />
             <Route path="/mobiliario" element={<Mobiliario />} />
             <Route path="/decoradores" element={<Decoradores />} />
