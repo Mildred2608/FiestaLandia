@@ -142,7 +142,7 @@ const Grupos = () => {
       onClick={() => setMostrarFormulario(!mostrarFormulario)} 
       className="boton-anadir"  // Cambiado a clase personalizada
     >
-      AÑADIR
+    + AÑADIR
     </button>
 
       {/* Formulario (condicional) */}

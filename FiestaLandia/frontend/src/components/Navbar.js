@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { FaUser } from 'react-icons/fa';
 import LoginModal from './LoginModal';
+import { FaUser } from 'react-icons/fa';
+
 
 function Navbar() {
   const { user, logout } = useAuth();

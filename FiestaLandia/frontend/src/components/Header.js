@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import Carrito from './pages/Carrito';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -17,20 +18,23 @@ const Header = () => {
         <li><NavLink to="/contacto">CONTACTO</NavLink></li>
       </ul>
 
-      {/* Botón del carrito agregado aquí */}
-      <button 
-        className="carrito-btn"
-        onClick={() => navigate('/carrito')}
-        aria-label="Carrito de compras"
-      >
-        <img 
-          src="/Carrito.png" 
-          alt="Ícono de carrito" 
-          className="carrito-icon" 
-        />
-        {/* Contador opcional - puedes conectarlo a tu estado */}
-        <span className="carrito-contador">0</span>
-      </button>
+      {/* Botón del carrito corregido */}
+      <div className="carrito-container">
+        <button
+          className="carrito-btn"
+          onClick={() => navigate('/carrito')}
+          aria-label="Carrito de compras"
+          style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+        >
+          <img
+            src="/Carrito.png"
+            alt="Ícono de carrito"
+            className="carrito-icon"
+            style={{ width: '40px', height: '40px' }}
+          />
+          <span className="carrito-contador">0</span>
+        </button>
+      </div>
     </header>
   );
 };
