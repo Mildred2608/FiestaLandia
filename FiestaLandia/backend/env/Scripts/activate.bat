@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set "VIRTUAL_ENV=C:\Users\abica\OneDrive\Documentos\6_Semestre\Programacion_web\FiestaLandia\fiestalandia\backend\env"
+set "VIRTUAL_ENV=C:\Users\charl\Proyectofinal\FiestaLandia\FiestaLandia\backend\env"
 
 if not defined PROMPT set PROMPT=$P$G
 
