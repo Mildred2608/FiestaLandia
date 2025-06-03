@@ -9,14 +9,19 @@ import SobreNosotros from './pages/Sobrenosotros';
 import SeleccionGenero from './pages/SeleccionGenero';
 import Grupos from './pages/Grupos';
 import Banquetes from './pages/Banquetes';
+import InicioBanquetes from './pages/InicioBanquetes';
+import InicioSalones from './pages/InicioSalones';
 import Salones from './pages/Salones';
 import Mobiliario from './pages/Mobiliario';
+import InicioMobiliario from './pages/InicioMobiliario';
+import InicioDecoradores from './pages/InicioDecoradores';
 import Decoradores from './pages/Decoradores';
 import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
 import UserProfile from './pages/UserProfile';
 import Carrito from './pages/Carrito';
 import './styles/style.css';
+
 
 const PrivateRoute = ({ children, adminOnly = false }) => {
   const { user } = useAuth();
@@ -48,10 +53,21 @@ function App() {
             {/* rutas abiertas al público */}
             <Route path="/grupos" element={<SeleccionGenero />} />
             <Route path="/grupos/:genero" element={<Grupos />} />
-            <Route path="/banquetes" element={<Banquetes />} />
-            <Route path="/salones" element={<Salones />} />
-            <Route path="/mobiliario" element={<Mobiliario />} />
-            <Route path="/decoradores" element={<Decoradores />} />
+            <Route path="/banquetes" element={<InicioBanquetes />} />
+            <Route path="/banquetes/:tipo" element={<Banquetes />} />
+
+            <Route path="/salones" element={<InicioSalones />} />
+            <Route path="/salones/:tipo" element={<Salones />} />
+
+
+          
+            <Route path="/mobiliario" element={<InicioMobiliario />} />
+            <Route path="/mobiliario/:tipo" element={<Mobiliario />} />
+
+            
+            <Route path="/decoradores" element={<InicioDecoradores />} />
+            <Route path="/decoradores/:tipo" element={<Decoradores />} />
+
 
             {/* rutas protegidas */}
             <Route path="/perfil" element={

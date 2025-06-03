@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: fiestalandia-backend
+    env: python
+    buildCommand: ""
+    startCommand: gunicorn FiestaLandia.wsgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: FiestaLandia.settings
+      - key: DATABASE_URL
+        value: <Render-te-la-generará-automáticamente-si-usas-PostgreSQL>

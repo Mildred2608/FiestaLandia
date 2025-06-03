@@ -8,6 +8,8 @@ from .models import TipoUsuario, Usuario
 from .serializers import RegisterSerializer, UsuarioSerializer
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import get_user_model
+from .models import GrupoMusical
+from .serializers import GrupoMusicalSerializer
 
 
 User = get_user_model()
@@ -69,3 +71,7 @@ class AdminDashboardView(APIView):
                 status=status.HTTP_403_FORBIDDEN
             )
         return Response({'message': 'Bienvenido al panel de administración'})
+
+class GruposViewSet(viewsets.ModelViewSet):
+    queryset = GrupoMusical.objects.all()
+    serializer_class = GrupoMusicalSerializer
