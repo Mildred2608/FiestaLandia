@@ -9,11 +9,8 @@ const gruposMusicales = [];
 
 const Grupos = () => {
   const { genero } = useParams();
-<<<<<<< HEAD
+
   const { agregarAlCarrito } = useCarrito(); // Hook para agregar al carrito
-=======
-  const { agregarProducto } = useCarrito();
->>>>>>> 2f0cfc5a6ce5b563424abaadb116a1b1a2f7dd07
 
   const [grupos, setGrupos] = useState(() => {
     const guardados = localStorage.getItem('gruposMusicales');
@@ -189,18 +186,7 @@ const Grupos = () => {
               <button className="btn-eliminar" onClick={() => eliminarGrupo(grupo.id)}>Eliminar</button>
               <button className="btn-editar" onClick={() => editarGrupo(grupo)}>Editar</button>
 
-              <button
-                className="btn-anadir-carrito"
-                onClick={() =>
-                  agregarProducto({
-                    nombre: grupo.nombre,
-                    precio: parseFloat(grupo.costos.replace(/[^0-9.]/g, '')) || 0,
-                    cantidad: 1,
-                  })
-                }
-              >
-                Añadir al carrito
-              </button>
+              
               <button
                 className="btn-carrito"
                 onClick={() =>

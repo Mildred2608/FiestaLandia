@@ -2,12 +2,8 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import '../styles/style.css';
 import BotonRegresar from '../components/BotonRegresar';
-<<<<<<< HEAD
 import { useCarrito } from '../context/CarritoContext';
-=======
-import { useCarrito } from '../context/CarritoContext'; // <-- AÑADIDO
 
->>>>>>> 2f0cfc5a6ce5b563424abaadb116a1b1a2f7dd07
 const salonesIniciales = [];
 
 const Salones = () => {
