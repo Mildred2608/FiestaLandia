@@ -695,3 +695,49 @@ form button {
 .btn-anadir-carrito:hover {
   background-color: #218838;
 }
+
+
+/* src/styles/style.css */
+
+/* El estilo del botón “Eliminar” debe coincidir con el resto de tu aplicación */
+.btn-eliminar {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.btn-eliminar:hover {
+  background-color: #c0392b;
+}
+
+/* Estilo para el botón “Comprar Carrito” */
+.btn-comprar {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.btn-comprar:hover {
+  background-color: #1e8449;
+}
+
+/* Opcional: ajustar inputs del formulario */
+input,
+select {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+  font-size: 14px;
+  padding: 8px;
+}

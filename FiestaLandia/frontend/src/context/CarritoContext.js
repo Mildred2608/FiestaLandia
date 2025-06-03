@@ -6,18 +6,30 @@ const CarritoContext = createContext();
 export const CarritoProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
 
- 
+  // Agrega un producto al carrito
   const agregarAlCarrito = (producto) => {
     setCarrito(prev => [...prev, producto]);
   };
 
-  
+  // Elimina un producto por su id
   const eliminarDelCarrito = (productoId) => {
     setCarrito(prev => prev.filter(p => p.id !== productoId));
   };
 
+  // Vacía totalmente el carrito
+  const vaciarCarrito = () => {
+    setCarrito([]);
+  };
+
   return (
-    <CarritoContext.Provider value={{ carrito, agregarAlCarrito, eliminarDelCarrito }}>
+    <CarritoContext.Provider
+      value={{
+        carrito,
+        agregarAlCarrito,
+        eliminarDelCarrito,
+        vaciarCarrito,  // <-- Exponemos esta función
+      }}
+    >
       {children}
     </CarritoContext.Provider>
   );
