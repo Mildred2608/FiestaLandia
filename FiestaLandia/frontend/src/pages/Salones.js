@@ -1,3 +1,4 @@
+// src/pages/Salones.js
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import '../styles/style.css';
@@ -10,7 +11,8 @@ const Salones = () => {
   const { tipo } = useParams();
   const tipoNormalizado = tipo?.trim().toLowerCase() || '';
 
-  const { agregarProducto } = useCarrito(); // <-- AÑADIDO
+  // Extraemos la función correcta del contexto: agregarAlCarrito
+  const { agregarAlCarrito } = useCarrito();
 
   const [salones, setSalones] = useState(() => {
     const guardados = localStorage.getItem('salones');
@@ -84,31 +86,92 @@ const Salones = () => {
     setIdEditando(salon.id);
     setMostrarFormulario(true);
   };
-  
 
   const salonesFiltrados = salones.filter((s) => s.tipo === tipoNormalizado);
 
   return (
     <div className="grupos-container">
       <BotonRegresar customClass="boton-regresar" />
-      <h1 className="titulo">Salones tipo: {tipo.charAt(0).toUpperCase() + tipo.slice(1)}</h1>
+      <h1 className="titulo">
+        Salones tipo: {tipo.charAt(0).toUpperCase() + tipo.slice(1)}
+      </h1>
 
-      <button onClick={() => setMostrarFormulario(!mostrarFormulario)} className="boton-anadir">
-        + {modoEdicion ? 'Editar' : 'Añadir'}
+      <button
+        onClick={() => {
+          setMostrarFormulario(!mostrarFormulario);
+          setModoEdicion(false);
+          setNuevoSalon({
+            nombre: '',
+            direccion: '',
+            capacidad: '',
+            precio: '',
+            imagen: '',
+            contacto: '',
+          });
+        }}
+        className="boton-anadir"
+      >
+        {mostrarFormulario ? '✖ Cerrar' : '+ AÑADIR'}
       </button>
 
       {mostrarFormulario && (
         <form onSubmit={handleSubmit} className="formulario-grupo">
-          <input type="text" name="nombre" placeholder="Nombre del salón" value={nuevoSalon.nombre} onChange={handleInputChange} required />
-          <input type="text" name="direccion" placeholder="Dirección" value={nuevoSalon.direccion} onChange={handleInputChange} required />
-          <input type="text" name="capacidad" placeholder="Capacidad (personas)" value={nuevoSalon.capacidad} onChange={handleInputChange} required />
-          <input type="text" name="precio" placeholder="Precio" value={nuevoSalon.precio} onChange={handleInputChange} required />
-          <input type="text" name="imagen" placeholder="URL de la imagen" value={nuevoSalon.imagen} onChange={handleInputChange} required />
-          <input type="text" name="contacto" placeholder="Teléfono del proveedor" value={nuevoSalon.contacto} onChange={handleInputChange} required />
+          <input
+            type="text"
+            name="nombre"
+            placeholder="Nombre del salón"
+            value={nuevoSalon.nombre}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            type="text"
+            name="direccion"
+            placeholder="Dirección"
+            value={nuevoSalon.direccion}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            type="text"
+            name="capacidad"
+            placeholder="Capacidad (personas)"
+            value={nuevoSalon.capacidad}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            type="text"
+            name="precio"
+            placeholder="Precio"
+            value={nuevoSalon.precio}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            type="text"
+            name="imagen"
+            placeholder="URL de la imagen"
+            value={nuevoSalon.imagen}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            type="text"
+            name="contacto"
+            placeholder="Teléfono del proveedor"
+            value={nuevoSalon.contacto}
+            onChange={handleInputChange}
+            required
+          />
           <button type="submit" className="btn btn-primary">
             {modoEdicion ? 'Guardar Cambios' : 'Guardar'}
           </button>
-          <button type="button" className="btn btn-cancelar" onClick={resetFormulario}>
+          <button
+            type="button"
+            className="btn btn-cancelar"
+            onClick={resetFormulario}
+          >
             Cancelar
           </button>
         </form>
@@ -120,31 +183,54 @@ const Salones = () => {
             <div className="grupo-card" key={s.id}>
               {s.imagen && (
                 <img
-                  src={s.imagen.startsWith('http') ? s.imagen : `${s.imagen}`}
+                  src={
+                    s.imagen.startsWith('http') ? s.imagen : `${s.imagen}`
+                  }
                   alt={s.nombre}
                   className="grupo-imagen"
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src = 'https://via.placeholder.com/300x200?text=Sin+imagen';
+                    e.target.src =
+                      'https://via.placeholder.com/300x200?text=Sin+imagen';
                   }}
                 />
               )}
               <h2>{s.nombre}</h2>
-              <p><strong>Dirección:</strong> {s.direccion}</p>
-              <p><strong>Capacidad:</strong> {s.capacidad} personas</p>
-              <p><strong>Precio:</strong> {s.precio}</p>
-              <p><strong>Contacto:</strong> {s.contacto}</p>
-
-              <button className="btn-eliminar" onClick={() => eliminarSalon(s.id)}>Eliminar</button>
-              <button className="btn-editar" onClick={() => editarSalon(s)}>Editar</button>
+              <p>
+                <strong>Dirección:</strong> {s.direccion}
+              </p>
+              <p>
+                <strong>Capacidad:</strong> {s.capacidad} personas
+              </p>
+              <p>
+                <strong>Precio:</strong> {s.precio}
+              </p>
+              <p>
+                <strong>Contacto:</strong> {s.contacto}
+              </p>
 
               <button
-                className="btn-anadir-carrito"
+                className="btn-eliminar"
+                onClick={() => eliminarSalon(s.id)}
+              >
+                Eliminar
+              </button>
+              <button
+                className="btn-editar"
+                onClick={() => editarSalon(s)}
+              >
+                Editar
+              </button>
+
+              {/* Botón "Añadir al carrito": llamamos a agregarAlCarrito 】*/}
+              <button
+                className="btn-carrito"
                 onClick={() =>
-                  agregarProducto({
+                  agregarAlCarrito({
+                    id: s.id,
                     nombre: s.nombre,
-                    precio: parseFloat(s.precio.replace(/[^0-9.]/g, '')) || 0,
-                    cantidad: 1,
+                    precio:
+                      parseFloat(s.precio.replace(/[^0-9.]/g, '')) || 0,
                   })
                 }
               >

@@ -1,3 +1,4 @@
+// src/pages/Banquetes.js
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import '../styles/style.css';
@@ -9,7 +10,9 @@ const banquetesIniciales = [];
 const Banquetes = () => {
   const { tipo } = useParams();
   const tipoNormalizado = tipo.trim().toLowerCase();
-  const { agregarProducto } = useCarrito();
+
+  // Extraemos la función correcta del contexto: agregarAlCarrito
+  const { agregarAlCarrito } = useCarrito();
 
   const [banquetes, setBanquetes] = useState(() => {
     const guardados = localStorage.getItem('banquetes');
@@ -60,7 +63,9 @@ const Banquetes = () => {
 
     if (modoEdicion) {
       const actualizados = banquetes.map((b) =>
-        b.id === idEditando ? { ...nuevoBanquete, id: idEditando, tipo: tipoNormalizado } : b
+        b.id === idEditando
+          ? { ...nuevoBanquete, id: idEditando, tipo: tipoNormalizado }
+          : b
       );
       setBanquetes(actualizados);
       localStorage.setItem('banquetes', JSON.stringify(actualizados));
@@ -188,25 +193,42 @@ const Banquetes = () => {
                   className="grupo-imagen"
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src = 'https://via.placeholder.com/300x200?text=Sin+imagen';
+                    e.target.src =
+                      'https://via.placeholder.com/300x200?text=Sin+imagen';
                   }}
                 />
               )}
               <h2>{b.nombre}</h2>
-              <p><strong>Precio:</strong> {b.precio}</p>
+              <p>
+                <strong>Precio:</strong> {b.precio}
+              </p>
               <p>{b.descripcion}</p>
-              <p><strong>Contacto:</strong> <a href={`tel:${b.contacto}`}>{b.contacto}</a></p>
-
-              <button className="btn-eliminar" onClick={() => eliminarBanquete(b.id)}>Eliminar</button>
-              <button className="btn-editar" onClick={() => editarBanquete(b)}>Editar</button>
+              <p>
+                <strong>Contacto:</strong>{' '}
+                <a href={`tel:${b.contacto}`}>{b.contacto}</a>
+              </p>
 
               <button
-                className="btn-anadir-carrito"
+                className="btn-eliminar"
+                onClick={() => eliminarBanquete(b.id)}
+              >
+                Eliminar
+              </button>
+              <button
+                className="btn-editar"
+                onClick={() => editarBanquete(b)}
+              >
+                Editar
+              </button>
+
+              {/* Botón "Añadir al carrito": usamos agregarAlCarrito */}
+              <button
+                className="btn-carrito"
                 onClick={() =>
-                  agregarProducto({
+                  agregarAlCarrito({
+                    id: b.id,
                     nombre: b.nombre,
                     precio: parseFloat(b.precio.replace(/[^0-9.]/g, '')) || 0,
-                    cantidad: 1,
                   })
                 }
               >

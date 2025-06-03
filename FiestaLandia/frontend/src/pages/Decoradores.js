@@ -1,8 +1,9 @@
+// src/pages/Decoradores.js
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import '../styles/style.css';
 import BotonRegresar from '../components/BotonRegresar';
-import { useCarrito } from '../context/CarritoContext'; // <-- AÑADIDO
+import { useCarrito } from '../context/CarritoContext';
 
 const decoradoresIniciales = [];
 
@@ -10,7 +11,8 @@ const Decoradores = () => {
   const { tipo } = useParams();
   const tipoNormalizado = tipo?.trim().toLowerCase() || '';
 
-  const { agregarProducto } = useCarrito(); // <-- AÑADIDO
+  // Extraemos la función correcta del contexto: agregarAlCarrito
+  const { agregarAlCarrito } = useCarrito();
 
   const [decoradores, setDecoradores] = useState(() => {
     const guardados = localStorage.getItem('decoradores');
@@ -56,6 +58,7 @@ const Decoradores = () => {
 
     setDecoradores(nuevos);
     localStorage.setItem('decoradores', JSON.stringify(nuevos));
+
     setMostrarFormulario(false);
     setModoEdicion(false);
     setIdEditando(null);
@@ -87,25 +90,70 @@ const Decoradores = () => {
   return (
     <div className="grupos-container">
       <BotonRegresar customClass="boton-regresar" />
-      <h1 className="titulo">Decoradores: {tipo.charAt(0).toUpperCase() + tipo.slice(1)}</h1>
+      <h1 className="titulo">
+        Decoradores: {tipo.charAt(0).toUpperCase() + tipo.slice(1)}
+      </h1>
 
-      <button onClick={() => setMostrarFormulario(!mostrarFormulario)} className="boton-anadir">
+      <button
+        onClick={() => setMostrarFormulario(!mostrarFormulario)}
+        className="boton-anadir"
+      >
         {mostrarFormulario ? '✖ Cerrar' : '+ AÑADIR'}
       </button>
 
       {mostrarFormulario && (
         <form onSubmit={handleSubmit} className="formulario-grupo">
-          <input name="nombre" placeholder="Nombre del decorador" value={nuevoDecorador.nombre} onChange={handleInputChange} required />
-          <input name="estilo" placeholder="Estilo de decoración" value={nuevoDecorador.estilo} onChange={handleInputChange} required />
-          <input name="precio" placeholder="Precio del servicio" value={nuevoDecorador.precio} onChange={handleInputChange} required />
-          <textarea name="descripcion" placeholder="Descripción del servicio" value={nuevoDecorador.descripcion} onChange={handleInputChange} required />
-          <input name="imagen" placeholder="URL de la imagen" value={nuevoDecorador.imagen} onChange={handleInputChange} required />
-          <input name="contacto" placeholder="Teléfono o WhatsApp" value={nuevoDecorador.contacto} onChange={handleInputChange} required />
+          <input
+            name="nombre"
+            placeholder="Nombre del decorador"
+            value={nuevoDecorador.nombre}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            name="estilo"
+            placeholder="Estilo de decoración"
+            value={nuevoDecorador.estilo}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            name="precio"
+            placeholder="Precio del servicio"
+            value={nuevoDecorador.precio}
+            onChange={handleInputChange}
+            required
+          />
+          <textarea
+            name="descripcion"
+            placeholder="Descripción del servicio"
+            value={nuevoDecorador.descripcion}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            name="imagen"
+            placeholder="URL de la imagen"
+            value={nuevoDecorador.imagen}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            name="contacto"
+            placeholder="Teléfono o WhatsApp"
+            value={nuevoDecorador.contacto}
+            onChange={handleInputChange}
+            required
+          />
 
           <button type="submit" className="btn btn-primary">
             {modoEdicion ? 'Guardar Cambios' : 'Guardar'}
           </button>
-          <button type="button" className="btn btn-cancelar" onClick={() => setMostrarFormulario(false)}>
+          <button
+            type="button"
+            className="btn btn-cancelar"
+            onClick={() => setMostrarFormulario(false)}
+          >
             Cancelar
           </button>
         </form>
@@ -127,21 +175,36 @@ const Decoradores = () => {
                 />
               )}
               <h2>{d.nombre}</h2>
-              <p><strong>Estilo:</strong> {d.estilo}</p>
-              <p><strong>Precio:</strong> {d.precio}</p>
+              <p>
+                <strong>Estilo:</strong> {d.estilo}
+              </p>
+              <p>
+                <strong>Precio:</strong> {d.precio}
+              </p>
               <p>{d.descripcion}</p>
-              <p><strong>Contacto:</strong> <a href={`tel:${d.contacto}`}>{d.contacto}</a></p>
-
-              <button className="btn-eliminar" onClick={() => eliminarDecorador(d.id)}>Eliminar</button>
-              <button className="btn-editar" onClick={() => editarDecorador(d)}>Editar</button>
+              <p>
+                <strong>Contacto:</strong>{' '}
+                <a href={`tel:${d.contacto}`}>{d.contacto}</a>
+              </p>
 
               <button
-                className="btn-anadir-carrito"
+                className="btn-eliminar"
+                onClick={() => eliminarDecorador(d.id)}
+              >
+                Eliminar
+              </button>
+              <button className="btn-editar" onClick={() => editarDecorador(d)}>
+                Editar
+              </button>
+
+              {/* Botón "Añadir al carrito": usamos agregarAlCarrito */}
+              <button
+                className="btn-carrito"
                 onClick={() =>
-                  agregarProducto({
+                  agregarAlCarrito({
+                    id: d.id,
                     nombre: d.nombre,
                     precio: parseFloat(d.precio.replace(/[^0-9.]/g, '')) || 0,
-                    cantidad: 1,
                   })
                 }
               >
