@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import '../styles/style.css';
 import BotonRegresar from '../components/BotonRegresar';
+import { useCarrito } from '../context/CarritoContext';
 
 const banquetesIniciales = [];
 
 const Banquetes = () => {
   const { tipo } = useParams();
   const tipoNormalizado = tipo.trim().toLowerCase();
+  const { agregarProducto } = useCarrito();
 
   const [banquetes, setBanquetes] = useState(() => {
     const guardados = localStorage.getItem('banquetes');
@@ -195,17 +197,20 @@ const Banquetes = () => {
               <p>{b.descripcion}</p>
               <p><strong>Contacto:</strong> <a href={`tel:${b.contacto}`}>{b.contacto}</a></p>
 
+              <button className="btn-eliminar" onClick={() => eliminarBanquete(b.id)}>Eliminar</button>
+              <button className="btn-editar" onClick={() => editarBanquete(b)}>Editar</button>
+
               <button
-                className="btn-editar"
-                onClick={() => editarBanquete(b)}
+                className="btn-anadir-carrito"
+                onClick={() =>
+                  agregarProducto({
+                    nombre: b.nombre,
+                    precio: parseFloat(b.precio.replace(/[^0-9.]/g, '')) || 0,
+                    cantidad: 1,
+                  })
+                }
               >
-                Editar
-              </button>
-              <button
-                className="btn-eliminar"
-                onClick={() => eliminarBanquete(b.id)}
-              >
-                Eliminar
+                Añadir al carrito
               </button>
             </div>
           ))

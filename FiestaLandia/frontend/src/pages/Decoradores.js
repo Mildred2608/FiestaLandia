@@ -1,14 +1,16 @@
-// src/pages/Decoradores.js
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import '../styles/style.css';
 import BotonRegresar from '../components/BotonRegresar';
+import { useCarrito } from '../context/CarritoContext'; // <-- AÑADIDO
 
 const decoradoresIniciales = [];
 
 const Decoradores = () => {
   const { tipo } = useParams();
   const tipoNormalizado = tipo?.trim().toLowerCase() || '';
+
+  const { agregarProducto } = useCarrito(); // <-- AÑADIDO
 
   const [decoradores, setDecoradores] = useState(() => {
     const guardados = localStorage.getItem('decoradores');
@@ -48,12 +50,9 @@ const Decoradores = () => {
       tipo: tipoNormalizado,
     };
 
-    let nuevos;
-    if (modoEdicion) {
-      nuevos = decoradores.map((d) => (d.id === idEditando ? nuevo : d));
-    } else {
-      nuevos = [...decoradores, nuevo];
-    }
+    const nuevos = modoEdicion
+      ? decoradores.map((d) => (d.id === idEditando ? nuevo : d))
+      : [...decoradores, nuevo];
 
     setDecoradores(nuevos);
     localStorage.setItem('decoradores', JSON.stringify(nuevos));
@@ -133,8 +132,21 @@ const Decoradores = () => {
               <p>{d.descripcion}</p>
               <p><strong>Contacto:</strong> <a href={`tel:${d.contacto}`}>{d.contacto}</a></p>
 
-              <button className="btn-editar" onClick={() => editarDecorador(d)}>Editar</button>
               <button className="btn-eliminar" onClick={() => eliminarDecorador(d.id)}>Eliminar</button>
+              <button className="btn-editar" onClick={() => editarDecorador(d)}>Editar</button>
+
+              <button
+                className="btn-anadir-carrito"
+                onClick={() =>
+                  agregarProducto({
+                    nombre: d.nombre,
+                    precio: parseFloat(d.precio.replace(/[^0-9.]/g, '')) || 0,
+                    cantidad: 1,
+                  })
+                }
+              >
+                Añadir al carrito
+              </button>
             </div>
           ))
         ) : (

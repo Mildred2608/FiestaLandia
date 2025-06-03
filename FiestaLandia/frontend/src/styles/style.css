@@ -651,6 +651,7 @@ body, .contenedor-padre {
   transform: scale(1.05);
 }
 
+<<<<<<< HEAD
 
 /* CARRITO */
 .btn-carrito {
@@ -680,4 +681,19 @@ form button {
   padding: 10px 20px;
   border: none;
   cursor: pointer;
+=======
+.btn-anadir-carrito {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.btn-anadir-carrito:hover {
+  background-color: #218838;
+>>>>>>> 2f0cfc5a6ce5b563424abaadb116a1b1a2f7dd07
 }

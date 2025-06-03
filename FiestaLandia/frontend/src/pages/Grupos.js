@@ -9,7 +9,11 @@ const gruposMusicales = [];
 
 const Grupos = () => {
   const { genero } = useParams();
+<<<<<<< HEAD
   const { agregarAlCarrito } = useCarrito(); // Hook para agregar al carrito
+=======
+  const { agregarProducto } = useCarrito();
+>>>>>>> 2f0cfc5a6ce5b563424abaadb116a1b1a2f7dd07
 
   const [grupos, setGrupos] = useState(() => {
     const guardados = localStorage.getItem('gruposMusicales');
@@ -65,7 +69,12 @@ const Grupos = () => {
     if (modoEdicion) {
       const actualizados = grupos.map((g) =>
         g.id === idEditando
-          ? { ...nuevoGrupo, id: idEditando, genero: genero.trim().toLowerCase(), musicos: parseInt(nuevoGrupo.musicos) }
+          ? {
+              ...nuevoGrupo,
+              id: idEditando,
+              genero: genero.trim().toLowerCase(),
+              musicos: parseInt(nuevoGrupo.musicos),
+            }
           : g
       );
       setGrupos(actualizados);
@@ -127,71 +136,18 @@ const Grupos = () => {
 
       {mostrarFormulario && (
         <form onSubmit={handleSubmit} className="formulario-grupo">
-          <input
-            type="text"
-            name="nombre"
-            placeholder="Nombre del grupo"
-            value={nuevoGrupo.nombre}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="text"
-            name="trayectoria"
-            placeholder="Años de trayectoria"
-            value={nuevoGrupo.trayectoria}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="number"
-            name="musicos"
-            placeholder="Número de músicos"
-            value={nuevoGrupo.musicos}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="text"
-            name="costos"
-            placeholder="Costos por paquete"
-            value={nuevoGrupo.costos}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="text"
-            name="equipo"
-            placeholder="Equipo"
-            value={nuevoGrupo.equipo}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="text"
-            name="extra"
-            placeholder="Costo extra por hora"
-            value={nuevoGrupo.extra}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="text"
-            name="imagen"
-            placeholder="URL de la imagen"
-            value={nuevoGrupo.imagen}
-            onChange={handleInputChange}
-            required
-          />
+          <input type="text" name="nombre" placeholder="Nombre del grupo" value={nuevoGrupo.nombre} onChange={handleInputChange} required />
+          <input type="text" name="trayectoria" placeholder="Años de trayectoria" value={nuevoGrupo.trayectoria} onChange={handleInputChange} required />
+          <input type="number" name="musicos" placeholder="Número de músicos" value={nuevoGrupo.musicos} onChange={handleInputChange} required />
+          <input type="text" name="costos" placeholder="Costos por paquete" value={nuevoGrupo.costos} onChange={handleInputChange} required />
+          <input type="text" name="equipo" placeholder="Equipo" value={nuevoGrupo.equipo} onChange={handleInputChange} required />
+          <input type="text" name="extra" placeholder="Costo extra por hora" value={nuevoGrupo.extra} onChange={handleInputChange} required />
+          <input type="text" name="imagen" placeholder="URL de la imagen" value={nuevoGrupo.imagen} onChange={handleInputChange} required />
 
           <button type="submit" className="btn btn-primary">
             {modoEdicion ? 'Guardar Cambios' : 'Guardar Grupo'}
           </button>
-          <button
-            type="button"
-            className="btn btn-cancelar"
-            onClick={resetFormulario}
-          >
+          <button type="button" className="btn btn-cancelar" onClick={resetFormulario}>
             Cancelar
           </button>
         </form>
@@ -203,17 +159,12 @@ const Grupos = () => {
             <div className="grupo-card" key={grupo.id}>
               {grupo.imagen && (
                 <img
-                  src={
-                    grupo.imagen.startsWith('http')
-                      ? grupo.imagen
-                      : `${grupo.imagen}`
-                  }
+                  src={grupo.imagen.startsWith('http') ? grupo.imagen : `${grupo.imagen}`}
                   alt={grupo.nombre}
                   className="grupo-imagen"
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src =
-                      'https://via.placeholder.com/300x200?text=Sin+imagen';
+                    e.target.src = 'https://via.placeholder.com/300x200?text=Sin+imagen';
                   }}
                 />
               )}
@@ -235,14 +186,20 @@ const Grupos = () => {
                 <strong>Costo extra por hora:</strong> {grupo.extra}
               </p>
 
-              <button className="btn-editar" onClick={() => editarGrupo(grupo)}>
-                Editar
-              </button>
+              <button className="btn-eliminar" onClick={() => eliminarGrupo(grupo.id)}>Eliminar</button>
+              <button className="btn-editar" onClick={() => editarGrupo(grupo)}>Editar</button>
+
               <button
-                className="btn-eliminar"
-                onClick={() => eliminarGrupo(grupo.id)}
+                className="btn-anadir-carrito"
+                onClick={() =>
+                  agregarProducto({
+                    nombre: grupo.nombre,
+                    precio: parseFloat(grupo.costos.replace(/[^0-9.]/g, '')) || 0,
+                    cantidad: 1,
+                  })
+                }
               >
-                Eliminar
+                Añadir al carrito
               </button>
               <button
                 className="btn-carrito"
