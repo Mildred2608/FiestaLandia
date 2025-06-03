@@ -650,3 +650,18 @@ body, .contenedor-padre {
   background-color: #314bb8;
   transform: scale(1.05);
 }
+
+.btn-anadir-carrito {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.btn-anadir-carrito:hover {
+  background-color: #218838;
+}
