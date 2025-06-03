@@ -1,17 +1,20 @@
 // src/pages/Carrito.js
 import React, { useState } from 'react';
 import { useCarrito } from '../context/CarritoContext';
-import '../styles/style.css';
+import '../styles/style.css'; // Asegúrate de que aquí definiste .btn-eliminar, .btn-comprar y .etiqueta-pagado
 
 const Carrito = () => {
-  // Extraemos vaciarCarrito además de las funciones que ya usábamos
   const {
     carrito,
     eliminarDelCarrito,
-    vaciarCarrito
+    marcarPendientesComoPagados,
+    // vaciarCarrito  // <-- ya no lo usaremos para el flujo “pagado”
   } = useCarrito();
 
+  // Estado para mostrar/ocultar el formulario de pago
   const [mostrarFormularioPago, setMostrarFormularioPago] = useState(false);
+
+  // Datos del formulario de pago
   const [datosPago, setDatosPago] = useState({
     nombreTitular: '',
     numeroTarjeta: '',
@@ -20,10 +23,15 @@ const Carrito = () => {
     metodo: 'tarjeta',
   });
 
-  // Calcula el total acumulado de los precios
-  const total = carrito.reduce((acum, p) => acum + p.precio, 0);
+  // Filtrar: artículos pendientes de pago (pagado === false)
+  const pendientes = carrito.filter((p) => p.pagado === false);
+  // Filtrar: artículos ya pagados (pagado === true)
+  const pagados = carrito.filter((p) => p.pagado === true);
 
-  // Actualiza los campos del formulario
+  // Calcular total solo de los pendientes
+  const totalPendientes = pendientes.reduce((acum, p) => acum + p.precio, 0);
+
+  // Manejar cambios en los inputs del formulario
   const handleCambioPago = (e) => {
     const { name, value } = e.target;
     setDatosPago((prev) => ({ ...prev, [name]: value }));
@@ -33,7 +41,7 @@ const Carrito = () => {
   const handlePagoSubmit = (e) => {
     e.preventDefault();
 
-    // Simulación de procesamiento de pago:
+    // Simulación de pago de todos los pendientes:
     alert(
       `Pago simulado:\n\nMétodo: ${
         datosPago.metodo === 'tarjeta'
@@ -41,13 +49,13 @@ const Carrito = () => {
           : datosPago.metodo === 'paypal'
           ? 'PayPal'
           : 'SPEI (Transferencia)'
-      }\nNombre Titular: ${datosPago.nombreTitular}\nMonto total: $${total}`
+      }\nNombre Titular: ${datosPago.nombreTitular}\nMonto total: $${totalPendientes}`
     );
 
-    // Después del "pago", vaciamos el carrito:
-    vaciarCarrito();
+    // Marcamos todos los pendientes como pagados (no los eliminamos)
+    marcarPendientesComoPagados();
 
-    // Reiniciamos el formulario:
+    // Reiniciamos el formulario y ocultamos la sección
     setDatosPago({
       nombreTitular: '',
       numeroTarjeta: '',
@@ -62,12 +70,14 @@ const Carrito = () => {
     <div style={{ padding: '20px' }}>
       <h1>Carrito de Compras</h1>
 
-      {carrito.length === 0 ? (
-        <p>Tu carrito está vacío.</p>
+      {/* === sección 1: artículos pendientes de pago === */}
+      {pendientes.length === 0 ? (
+        <p>No tienes artículos pendientes de pago.</p>
       ) : (
         <>
+          <h2>Artículos en el carrito (pendientes)</h2>
           <ul style={{ listStyle: 'none', padding: 0 }}>
-            {carrito.map((producto) => (
+            {pendientes.map((producto) => (
               <li
                 key={producto.id}
                 style={{
@@ -77,7 +87,7 @@ const Carrito = () => {
                 }}
               >
                 <span style={{ flexGrow: 1 }}>
-                  {producto.nombre} - ${producto.precio}
+                  {producto.nombre} — ${producto.precio}
                 </span>
                 <button
                   className="btn-eliminar"
@@ -89,17 +99,17 @@ const Carrito = () => {
             ))}
           </ul>
 
-          <p style={{ fontWeight: 'bold' }}>Total: ${total}</p>
+          <p style={{ fontWeight: 'bold' }}>Total pendiente: ${totalPendientes}</p>
 
-          {/* Botón para mostrar/ocultar el formulario de pago */}
+          {/* Botón para mostrar/ocultar formulario de pago */}
           <button
             className="btn-comprar"
             onClick={() => setMostrarFormularioPago((prev) => !prev)}
           >
-            {mostrarFormularioPago ? '✖ Cancelar Pago' : 'Comprar Carrito'}
+            {mostrarFormularioPago ? '✖ Cancelar Pago' : 'Pagar Carrito'}
           </button>
 
-          {/* Formulario de pago */}
+          {/* Formulario de pago SOLO para los pendientes */}
           {mostrarFormularioPago && (
             <form
               onSubmit={handlePagoSubmit}
@@ -110,7 +120,7 @@ const Carrito = () => {
                 flexDirection: 'column',
               }}
             >
-              <h2>Formulario de Pago</h2>
+              <h3>Formulario de Pago</h3>
 
               {/* Selección de método de pago */}
               <label htmlFor="metodo">Método de pago:</label>
@@ -126,7 +136,7 @@ const Carrito = () => {
                 <option value="spei">SPEI (Transferencia)</option>
               </select>
 
-              {/* Si el método es “tarjeta”, pedimos datos específicos */}
+              {/* Si eligió “tarjeta”, mostramos campos adicionales */}
               {datosPago.metodo === 'tarjeta' && (
                 <>
                   <input
@@ -174,16 +184,15 @@ const Carrito = () => {
                 </>
               )}
 
-              {/* Si es PayPal o SPEI, mostramos un mensaje informativo */}
+              {/* Mensajes para PayPal o SPEI (simulados) */}
               {datosPago.metodo === 'paypal' && (
                 <p>
-                  Serás redirigido a PayPal para completar tu pago. (Simulado)
+                  Al hacer clic en “Pagar”, se simulará redirección a PayPal.
                 </p>
               )}
               {datosPago.metodo === 'spei' && (
                 <p>
-                  Para pagos por SPEI, recibirás instrucciones por correo.
-                  (Simulado)
+                  Tras “Pagar”, recibirás instrucciones por correo para SPEI.
                 </p>
               )}
 
@@ -192,10 +201,37 @@ const Carrito = () => {
                 className="btn-comprar"
                 style={{ marginTop: '12px' }}
               >
-                Pagar ${total}
+                Pagar ${totalPendientes}
               </button>
             </form>
           )}
+        </>
+      )}
+
+      <hr style={{ margin: '30px 0', borderColor: '#ddd' }} />
+
+      {/* === sección 2: artículos ya pagados === */}
+      {pagados.length > 0 && (
+        <>
+          <h2>Artículos ya pagados</h2>
+          <ul style={{ listStyle: 'none', padding: 0 }}>
+            {pagados.map((producto) => (
+              <li
+                key={producto.id}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  marginBottom: '12px',
+                }}
+              >
+                <span style={{ flexGrow: 1 }}>
+                  {producto.nombre} — ${producto.precio}
+                </span>
+                {/* Etiqueta “Pagado” (sin botón) */}
+                <span className="etiqueta-pagado">Pagado</span>
+              </li>
+            ))}
+          </ul>
         </>
       )}
     </div>

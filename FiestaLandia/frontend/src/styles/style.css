@@ -697,9 +697,7 @@ form button {
 }
 
 
-/* src/styles/style.css */
-
-/* El estilo del botón “Eliminar” debe coincidir con el resto de tu aplicación */
+/* Botón “Eliminar” (igual que en otras partes) */
 .btn-eliminar {
   background-color: #e74c3c;
   color: white;
@@ -714,7 +712,7 @@ form button {
   background-color: #c0392b;
 }
 
-/* Estilo para el botón “Comprar Carrito” */
+/* Botón “Pagar Carrito” / “Comprar Carrito” */
 .btn-comprar {
   background-color: #27ae60;
   color: white;
@@ -730,7 +728,17 @@ form button {
   background-color: #1e8449;
 }
 
-/* Opcional: ajustar inputs del formulario */
+/* Etiqueta para los artículos ya pagados */
+.etiqueta-pagado {
+  background-color: #3498db;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+/* Inputs y select del formulario */
 input,
 select {
   border: 1px solid #ccc;
