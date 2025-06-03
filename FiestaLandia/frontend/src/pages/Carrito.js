@@ -1,14 +1,11 @@
 // src/pages/Carrito.js
 import React from 'react';
-import { useAuth } from '../context/AuthContext';
 import { useCarrito } from '../context/CarritoContext';
-import { useNavigate } from 'react-router-dom'; // Importar hook de navegación
-// También asumo que tienes definidos estos hooks para el usuario y el carrito
-// import { useAuth } from '../context/AuthContext';
-// import { useCarrito } from '../context/CarritoContext';
 
 function Carrito() {
-  const { carrito } = useCarrito();
+  const { carrito, eliminarDelCarrito } = useCarrito();
+
+  const total = carrito.reduce((acc, p) => acc + p.precio, 0);
 
   return (
     <div style={{ padding: '20px' }}>
@@ -17,16 +14,33 @@ function Carrito() {
       {carrito.length === 0 ? (
         <p>Tu carrito está vacío.</p>
       ) : (
-        <ul>
-          {carrito.map((producto, index) => (
-            <li key={index}>
-              {producto.nombre} - ${producto.precio}
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul>
+            {carrito.map((producto, index) => (
+              <li key={index}>
+                {producto.nombre} - ${producto.precio}
+                <button onClick={() => eliminarDelCarrito(producto.id)}>
+                  Eliminar
+                </button>
+              </li>
+            ))}
+          </ul>
+          <p><strong>Total:</strong> ${total}</p>
+        </>
       )}
     </div>
   );
 }
+<form onSubmit={(e) => {
+  e.preventDefault();
+  alert('Compra realizada con éxito. Gracias por su pedido.');
+}}>
+  <h2>Formulario de pago</h2>
+  <input type="text" placeholder="Nombre en la tarjeta" required />
+  <input type="text" placeholder="Número de tarjeta" required pattern="\d{16}" />
+  <input type="text" placeholder="Fecha de expiración (MM/AA)" required pattern="\d{2}/\d{2}" />
+  <input type="text" placeholder="CVV" required pattern="\d{3}" />
+  <button type="submit">Pagar</button>
+</form>
 
 export default Carrito;

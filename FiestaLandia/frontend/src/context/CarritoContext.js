@@ -1,3 +1,4 @@
+// src/context/CarritoContext.js
 import React, { createContext, useContext, useState } from 'react';
 
 const CarritoContext = createContext();
@@ -5,15 +6,18 @@ const CarritoContext = createContext();
 export const CarritoProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
 
-  // Ejemplo de función para agregar producto
-  const agregarProducto = (producto) => {
+ 
+  const agregarAlCarrito = (producto) => {
     setCarrito(prev => [...prev, producto]);
   };
 
-  // Puedes agregar funciones para eliminar, limpiar carrito, etc.
+  
+  const eliminarDelCarrito = (productoId) => {
+    setCarrito(prev => prev.filter(p => p.id !== productoId));
+  };
 
   return (
-    <CarritoContext.Provider value={{ carrito, agregarProducto }}>
+    <CarritoContext.Provider value={{ carrito, agregarAlCarrito, eliminarDelCarrito }}>
       {children}
     </CarritoContext.Provider>
   );

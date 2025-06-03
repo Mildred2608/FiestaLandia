@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import '../styles/style.css';
 import BotonRegresar from '../components/BotonRegresar';
-
+import { useCarrito } from '../context/CarritoContext';
 const salonesIniciales = [];
 
 const Salones = () => {
@@ -89,6 +89,7 @@ const Salones = () => {
     setIdEditando(salon.id);
     setMostrarFormulario(true);
   };
+  
 
   return (
     <div className="grupos-container">

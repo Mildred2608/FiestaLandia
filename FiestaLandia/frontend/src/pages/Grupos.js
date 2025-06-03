@@ -1,12 +1,15 @@
+// src/pages/Grupos.js
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import '../styles/style.css';
 import BotonRegresar from '../components/BotonRegresar';
+import { useCarrito } from '../context/CarritoContext';
 
 const gruposMusicales = [];
 
 const Grupos = () => {
   const { genero } = useParams();
+  const { agregarAlCarrito } = useCarrito(); // Hook para agregar al carrito
 
   const [grupos, setGrupos] = useState(() => {
     const guardados = localStorage.getItem('gruposMusicales');
@@ -53,13 +56,11 @@ const Grupos = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const campos = Object.entries(nuevoGrupo);
     if (campos.some(([key, value]) => typeof value === 'string' && value.trim() === '')) {
-    alert('Por favor, completa todos los campos.');
-    return;
-}
-
+      alert('Por favor, completa todos los campos.');
+      return;
+    }
 
     if (modoEdicion) {
       const actualizados = grupos.map((g) =>
@@ -218,11 +219,21 @@ const Grupos = () => {
               )}
               <h2>{grupo.nombre}</h2>
               <h3>Género: {grupo.genero}</h3>
-              <p><strong>Años de trayectoria:</strong> {grupo.trayectoria}</p>
-              <p><strong>Número de músicos:</strong> {grupo.musicos}</p>
-              <p><strong>Costos por paquetes:</strong> {grupo.costos}</p>
-              <p><strong>Equipo:</strong> {grupo.equipo}</p>
-              <p><strong>Costo extra por hora:</strong> {grupo.extra}</p>
+              <p>
+                <strong>Años de trayectoria:</strong> {grupo.trayectoria}
+              </p>
+              <p>
+                <strong>Número de músicos:</strong> {grupo.musicos}
+              </p>
+              <p>
+                <strong>Costos por paquetes:</strong> {grupo.costos}
+              </p>
+              <p>
+                <strong>Equipo:</strong> {grupo.equipo}
+              </p>
+              <p>
+                <strong>Costo extra por hora:</strong> {grupo.extra}
+              </p>
 
               <button className="btn-editar" onClick={() => editarGrupo(grupo)}>
                 Editar
@@ -232,6 +243,21 @@ const Grupos = () => {
                 onClick={() => eliminarGrupo(grupo.id)}
               >
                 Eliminar
+              </button>
+              <button
+                className="btn-carrito"
+                onClick={() =>
+                  agregarAlCarrito({
+                    id: grupo.id,
+                    nombre: grupo.nombre,
+                    precio:
+                      parseFloat(
+                        grupo.costos.replace(/[^0-9.]/g, '')
+                      ) || 0,
+                  })
+                }
+              >
+                Agregar al carrito
               </button>
             </div>
           ))
