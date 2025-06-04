@@ -1,29 +1,55 @@
 pipeline {
     agent any
 
+    environment {
+        VIRTUAL_ENV = 'venv'
+    }
+
     stages {
         stage('Clonar Repositorio') {
             steps {
-                // Jenkins ya hace esto, pero por claridad lo dejamos
                 git 'https://github.com/Mildred2608/FiestaLandia.git'
             }
         }
 
-        stage('Instalar dependencias') {
+        stage('Configurar entorno virtual') {
             steps {
-                sh 'echo Instalando dependencias...'
-                // Si usas Python:
-                // sh 'pip install -r requirements.txt'
-                // Si usas Node.js:
-                // sh 'npm install'
+                sh '''
+                    python3 -m venv $VIRTUAL_ENV
+                    . $VIRTUAL_ENV/bin/activate
+                    pip install --upgrade pip
+                    pip install -r requirements.txt
+                '''
             }
         }
 
-        stage('Ejecutar pruebas') {
+        stage('Migraciones de base de datos') {
             steps {
-                sh 'echo Ejecutando pruebas...'
-                // Ejemplo para Django:
-                // sh 'python manage.py test'
+                sh '''
+                    . $VIRTUAL_ENV/bin/activate
+                    python manage.py migrate
+                '''
+            }
+        }
+
+        stage('Correr pruebas unitarias') {
+            steps {
+                sh '''
+                    . $VIRTUAL_ENV/bin/activate
+                    python manage.py test
+                '''
+            }
+        }
+
+        stage('Servidor local (opcional)') {
+            when {
+                expression { return false } // pon true si quieres levantar el servidor
+            }
+            steps {
+                sh '''
+                    . $VIRTUAL_ENV/bin/activate
+                    python manage.py runserver 0.0.0.0:8000
+                '''
             }
         }
     }
