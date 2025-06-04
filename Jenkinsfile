@@ -14,9 +14,9 @@ pipeline {
 
         stage('Configurar entorno virtual') {
             steps {
-                sh '''
-                    python3 -m venv $VIRTUAL_ENV
-                    . $VIRTUAL_ENV/bin/activate
+                bat '''
+                    python -m venv %VIRTUAL_ENV%
+                    call %VIRTUAL_ENV%\\Scripts\\activate.bat
                     pip install --upgrade pip
                     pip install -r requirements.txt
                 '''
@@ -25,8 +25,8 @@ pipeline {
 
         stage('Migraciones de base de datos') {
             steps {
-                sh '''
-                    . $VIRTUAL_ENV/bin/activate
+                bat '''
+                    call %VIRTUAL_ENV%\\Scripts\\activate.bat
                     python manage.py migrate
                 '''
             }
@@ -34,8 +34,8 @@ pipeline {
 
         stage('Correr pruebas unitarias') {
             steps {
-                sh '''
-                    . $VIRTUAL_ENV/bin/activate
+                bat '''
+                    call %VIRTUAL_ENV%\\Scripts\\activate.bat
                     python manage.py test
                 '''
             }
@@ -46,8 +46,8 @@ pipeline {
                 expression { return false } // pon true si quieres levantar el servidor
             }
             steps {
-                sh '''
-                    . $VIRTUAL_ENV/bin/activate
+                bat '''
+                    call %VIRTUAL_ENV%\\Scripts\\activate.bat
                     python manage.py runserver 0.0.0.0:8000
                 '''
             }
