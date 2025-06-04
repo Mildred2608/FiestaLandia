@@ -5,12 +5,11 @@ pipeline {
         VIRTUAL_ENV = 'venv'
     }
 
-    stages {
-        stage('Clonar Repositorio') {
-            steps {
-                git 'https://github.com/Mildred2608/FiestaLandia.git'
-            }
-        }
+  stage('Clonar Repositorio') {
+    steps {
+        git branch: 'main', url: 'https://github.com/Mildred2608/FiestaLandia.git'
+    }
+}
 
         stage('Configurar entorno virtual') {
             steps {
