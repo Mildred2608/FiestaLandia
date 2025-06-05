@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useCarrito } from '../context/CarritoContext';
 import LoginModal from './LoginModal';
 import { FaUser } from 'react-icons/fa';
 
-
 function Navbar() {
   const { user, logout } = useAuth();
+  const { carrito } = useCarrito(); 
+  const navigate = useNavigate();    
   const [isModalOpen, setModalOpen] = useState(false);
 
   return (
@@ -26,9 +28,11 @@ function Navbar() {
         </ul>
 
         <div className="navbar-right">
-          <button className="carrito-btn">
+          <button className="carrito-btn" onClick={() => navigate('/carrito')}>
             <img src="/carrito.png" alt="Carrito" className="carrito-icon" />
-            <div className="carrito-contador">0</div>
+            {carrito.length > 0 && (
+              <div className="carrito-contador">{carrito.length}</div>
+            )}
           </button>
 
           {!user ? (

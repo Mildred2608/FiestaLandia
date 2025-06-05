@@ -1,14 +1,16 @@
-// src/pages/Mobiliario.js
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import '../styles/style.css';
 import BotonRegresar from '../components/BotonRegresar';
+import { useCarrito } from '../context/CarritoContext'; // <-- AÑADIDO
 
 const mobiliarioInicial = [];
 
 const Mobiliario = () => {
   const { tipo } = useParams();
   const tipoNormalizado = tipo?.trim().toLowerCase() || '';
+
+  const { agregarProducto } = useCarrito(); // <-- AÑADIDO
 
   const [items, setItems] = useState(() => {
     const guardados = localStorage.getItem('mobiliario');
@@ -128,8 +130,22 @@ const Mobiliario = () => {
               <p><strong>Descripción:</strong> {item.descripcion}</p>
               <p><strong>Precio:</strong> {item.precio}</p>
               <p><strong>Contacto:</strong> {item.contacto}</p>
+
               <button className="btn-eliminar" onClick={() => eliminarItem(item.id)}>Eliminar</button>
               <button className="btn-editar" onClick={() => editarItem(item)}>Editar</button>
+
+              <button
+                className="btn-anadir-carrito"
+                onClick={() =>
+                  agregarProducto({
+                    nombre: item.nombre,
+                    precio: parseFloat(item.precio.replace(/[^0-9.]/g, '')) || 0,
+                    cantidad: 1,
+                  })
+                }
+              >
+                Añadir al carrito
+              </button>
             </div>
           ))
         ) : (

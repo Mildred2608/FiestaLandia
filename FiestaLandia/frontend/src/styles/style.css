@@ -543,3 +543,110 @@ body, .contenedor-padre {
 .btn-eliminar:hover {
   background-color: #c0392b;
 }
+/* EDITAR */
+.btn-editar {
+  margin-top: 10px;
+  background-color: #2980b9;
+  color: white;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+}
+
+.btn-editar:hover {
+  background-color: #1f6391;
+}
+
+
+.titulo-generos {
+  text-align: center;
+  background-color: #f3e6f6;
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: black;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contenedor-generos {
+  margin-top: 40px;
+  background-color: #d8bcbc;
+  padding: 20px;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.genero-btn {
+  background-color: #4169e1;
+  color: white;
+  padding: 10px 25px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+}
+
+.genero-btn:hover {
+  background-color: #314bb8;
+  transform: scale(1.05);
+}
+
+
+
+
+/* mobiliario */ 
+.titulo-generos {
+  text-align: center;
+  background-color: #f3e6f6;
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: black;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contenedor-generos {
+  margin-top: 40px;
+  background-color: #d8bcbc;
+  padding: 20px;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.genero-btn {
+  background-color: #4169e1;
+  color: white;
+  padding: 10px 25px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+}
+
+.genero-btn:hover {
+  background-color: #314bb8;
+  transform: scale(1.05);
+}
